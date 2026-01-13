@@ -4,37 +4,61 @@ import pandas as pd
 # إعداد الصفحة بالعرض الكامل
 st.set_page_config(page_title="Player Results", layout="wide")
 
-# تصميم الواجهة
+# --- تحسينات التصميم عبر CSS ---
 st.markdown("""
     <style>
     .main { background-color: #0e1117; color: white; }
-    h1 { color: #00e5ff; text-align: center; font-family: 'Arial'; margin-bottom: 0px;}
-    .stDataFrame { border: 1px solid #4B0082; }
+    
+    /* تغيير حجم ولون عنوان الصفحة */
+    .main-title {
+        font-size: 50px !important;
+        color: #00e5ff;
+        text-align: center;
+        font-weight: bold;
+        text-shadow: 2px 2px 10px #4B0082;
+        margin-bottom: 20px;
+    }
+
+    /* تحسين شكل جدول البيانات */
+    .stDataFrame {
+        border: 2px solid #4B0082;
+        border-radius: 15px;
+        overflow: hidden;
+    }
     </style>
     """, unsafe_allow_html=True)
 
-st.title("🏆 [RUM] BOTTLES AND BATTLES")
+# --- إضافة الشعار (Logo) ---
+# يمكنك استبدال الرابط أدناه برابط مباشر لصورة شعارك
+#logo_url = "https://raw.githubusercontent.com/abdulraoufsuliman-ctrl/Chest_Tracker/main/logo.png"
+
+# عرض الشعار في المنتصف
+col1, col2, col3 = st.columns([1, 1, 1])
+with col2:
+    # إذا كان لديك شعار، سيظهر هنا، وإذا لم يوجد سيتجاهله الكود
+    try:
+        st.image(logo_url, width=200)
+    except:
+        pass
+
+# --- عنوان الصفحة بحجم مخصص ---
+st.markdown('<p class="main-title">[RUM] BOTTLES AND BATTLE</p>', unsafe_allow_html=True)
 
 file_name = 'Results.xlsx'
 sheet_target = 'Results' 
 
 try:
     df = pd.read_excel(file_name, sheet_name=sheet_target)
-
-    # تنظيف البيانات
     df = df.dropna(how='all', axis=0).dropna(how='all', axis=1)
 
     if not df.empty:
-        # حذف الصفوف الفارغة في أول عمودين (الاسم والنقاط)
         df = df.dropna(subset=[df.columns[0], df.columns[1]])
-        
-        # ترتيب البيانات حسب النقاط
         df = df.sort_values(by=df.columns[1], ascending=False)
 
-        #st.write(f"### Leaders list (live update)")
+        # إضافة نص "آخر تحديث" ليعرف اللاعبون دقة البيانات
+       # st.info("💡 The leaderboard is updated live based on game progress.")
         
-        # التعديل هنا: أضفنا height=1000 لزيادة الارتفاع بشكل كبير
-        # يمكنك تغيير الرقم 1000 إلى 1500 أو أكثر حسب رغبتك
+        # عرض الجدول بارتفاع كبير وعرض كامل
         st.dataframe(df, use_container_width=True, hide_index=True, height=600) 
 
 except Exception as e:
