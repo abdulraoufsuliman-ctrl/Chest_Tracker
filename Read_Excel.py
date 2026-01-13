@@ -31,7 +31,7 @@ try:
         # ترتيب البيانات حسب النقاط
         df = df.sort_values(by=df.columns[1], ascending=False)
 
-        st.write(f"### Leaders list (live update)")
+        #st.write(f"### Leaders list (live update)")
         
         # التعديل هنا: أضفنا height=1000 لزيادة الارتفاع بشكل كبير
         # يمكنك تغيير الرقم 1000 إلى 1500 أو أكثر حسب رغبتك
@@ -39,6 +39,7 @@ try:
 
 except Exception as e:
     st.error(f"Error: {e}")
+
 
 
 
