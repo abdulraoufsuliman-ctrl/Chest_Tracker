@@ -1,20 +1,19 @@
 import streamlit as st
 import pandas as pd
 
-# 1. إعداد الصفحة بالوضع العريض (Wide) لاستغلال كامل مساحة الشاشة
-st.set_page_config(page_title="Player results", layout="wide")
+# إعداد الصفحة بالعرض الكامل
+st.set_page_config(page_title="Player Results", layout="wide")
 
-# تصميم الثيم
+# تصميم الواجهة
 st.markdown("""
     <style>
     .main { background-color: #0e1117; color: white; }
-    h1 { color: #00e5ff; text-align: center; font-family: 'Arial'; }
-    /* إضافة إطار بسيط للجدول */
+    h1 { color: #00e5ff; text-align: center; font-family: 'Arial'; margin-bottom: 0px;}
     .stDataFrame { border: 1px solid #4B0082; }
     </style>
     """, unsafe_allow_html=True)
 
-#st.title("🏆 Leaderboard")
+st.title("🏆 Leaderboard")
 
 file_name = 'Results.xlsx'
 sheet_target = 'Results' 
@@ -26,19 +25,21 @@ try:
     df = df.dropna(how='all', axis=0).dropna(how='all', axis=1)
 
     if not df.empty:
-        # حذف الصفوف الفارغة في الأعمدة الأساسية
+        # حذف الصفوف الفارغة في أول عمودين (الاسم والنقاط)
         df = df.dropna(subset=[df.columns[0], df.columns[1]])
         
-        # ترتيب البيانات
+        # ترتيب البيانات حسب النقاط
         df = df.sort_values(by=df.columns[1], ascending=False)
 
         st.write(f"### Leaders list (live update)")
         
-        # 2. عرض الجدول مع خاصية التمدد العريض
-        st.dataframe(df, use_container_width=True, hide_index=True) 
+        # التعديل هنا: أضفنا height=1000 لزيادة الارتفاع بشكل كبير
+        # يمكنك تغيير الرقم 1000 إلى 1500 أو أكثر حسب رغبتك
+        st.dataframe(df, use_container_width=True, hide_index=True, height=1000) 
 
 except Exception as e:
     st.error(f"Error: {e}")
+
 
 
 
