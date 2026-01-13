@@ -13,7 +13,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-st.title("🏆 Leaderboard")
+st.title("🏆 [RUM] BOTTLES AND BATTLES")
 
 file_name = 'Results.xlsx'
 sheet_target = 'Results' 
@@ -35,10 +35,11 @@ try:
         
         # التعديل هنا: أضفنا height=1000 لزيادة الارتفاع بشكل كبير
         # يمكنك تغيير الرقم 1000 إلى 1500 أو أكثر حسب رغبتك
-        st.dataframe(df, use_container_width=True, hide_index=True, height=1000) 
+        st.dataframe(df, use_container_width=True, hide_index=True, height=500) 
 
 except Exception as e:
     st.error(f"Error: {e}")
+
 
 
 
