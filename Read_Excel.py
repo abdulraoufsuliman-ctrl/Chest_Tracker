@@ -35,10 +35,11 @@ try:
         
         # التعديل هنا: أضفنا height=1000 لزيادة الارتفاع بشكل كبير
         # يمكنك تغيير الرقم 1000 إلى 1500 أو أكثر حسب رغبتك
-        st.dataframe(df, use_container_width=True, hide_index=True, height=700) 
+        st.dataframe(df, use_container_width=True, hide_index=True, height=600) 
 
 except Exception as e:
     st.error(f"Error: {e}")
+
 
 
 
