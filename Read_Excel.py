@@ -17,7 +17,7 @@ st.title("🏆 Leaderboard  ")
 
 # اسم ملف الإكسل واسم الورقة النهائية (قم بتغيير 'Results' لاسم ورقتك النهائية)
 file_name = 'Results.xlsx'
-sheet_target = 'Results ' # ضع هنا اسم الورقة التي تحتوي على النتائج
+sheet_target = 'Results' # ضع هنا اسم الورقة التي تحتوي على النتائج
 
 try:
     # 1. قراءة الورقة المحددة فقط من ملف الإكسل
@@ -41,3 +41,4 @@ try:
 
 except Exception as e:
     st.error(f"An error occurred: Please verify the name of the Excel file and the name of the sheet. (Sheet Name). Error: {e}")
+
