@@ -14,7 +14,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-st.title("🏆 Leaderboard")
+#st.title("🏆 Leaderboard")
 
 file_name = 'Results.xlsx'
 sheet_target = 'Results' 
@@ -39,6 +39,7 @@ try:
 
 except Exception as e:
     st.error(f"Error: {e}")
+
 
 
 
