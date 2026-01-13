@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 # إعدادات الصفحة
-st.set_page_config(page_title="نتائج اللاعبين", layout="centered")
+st.set_page_config(page_title=" Player results", layout="centered")
 
 # تصميم الثيم (CSS بسيط لجعل الموقع داكناً وجذاباً)
 st.markdown("""
@@ -13,11 +13,11 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-st.title("🏆 لوحة متصدرين اللعبة")
+st.title("🏆 Leaderboard  ")
 
 # اسم ملف الإكسل واسم الورقة النهائية (قم بتغيير 'Results' لاسم ورقتك النهائية)
 file_name = 'Results.xlsx'
-sheet_target = 'النتائج النهائية' # ضع هنا اسم الورقة التي تحتوي على النتائج
+sheet_target = 'Results ' # ضع هنا اسم الورقة التي تحتوي على النتائج
 
 try:
     # 1. قراءة الورقة المحددة فقط من ملف الإكسل
@@ -34,10 +34,10 @@ try:
     df = df.sort_values(by=df.columns[1], ascending=False)
 
     # عرض الجدول بشكل أنيق
-    st.write(f"### قائمة المتصدرين (تحديث مباشر)")
+    st.write(f"### Leaders list (live update))")
     
     # تنسيق الجدول ليظهر بشكل احترافي بدون أرقام المؤشر الجانبية
     st.table(df) 
 
 except Exception as e:
-    st.error(f"حدث خطأ: تأكد من اسم ملف الإكسل واسم الورقة (Sheet Name). الخطأ: {e}")
+    st.error(f"An error occurred: Please verify the name of the Excel file and the name of the sheet. (Sheet Name). Error: {e}")
