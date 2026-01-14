@@ -40,7 +40,7 @@ st.markdown("""
 
 # --- إضافة الشعار (Logo) ---
 # يمكنك استبدال الرابط أدناه برابط مباشر لصورة شعارك
-#logo_url = "https://raw.githubusercontent.com/abdulraoufsuliman-ctrl/Chest_Tracker/main/logo.png"
+logo_url = "https://raw.githubusercontent.com/abdulraoufsuliman-ctrl/Chest_Tracker/main/logo.png"
 
 # عرض الشعار في المنتصف
 col1, col2, col3 = st.columns([1, 1, 1])
@@ -73,6 +73,7 @@ try:
 
 except Exception as e:
     st.error(f"Error: {e}")
+
 
 
 
