@@ -51,7 +51,7 @@ st.markdown("""
 
     /* رفع الجدول ليغطي خط التابات */
 .stDataFrame {
-    margin-top: -14px;      /* عدّل القيمة إذا لزم */
+    margin-top: -18px;      /* عدّل القيمة إذا لزم */
     position: relative;
     z-index: 2;
 }
@@ -217,6 +217,7 @@ with tab1:
 
 with tab2:
     load_and_display("Results2.xlsx")
+
 
 
 
