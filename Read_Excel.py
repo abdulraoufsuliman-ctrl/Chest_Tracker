@@ -5,6 +5,7 @@ import pandas as pd
 st.set_page_config(page_title="Player Results", layout="wide")
 
 # --- تحسينات التصميم عبر CSS ---
+st.markdown("""
 <style>
 .main {
     background-color: #0e1117;
@@ -35,6 +36,7 @@ st.set_page_config(page_title="Player Results", layout="wide")
 }
 </style>
 """, unsafe_allow_html=True)
+
 
 # --- إضافة الشعار (Logo) ---
 # يمكنك استبدال الرابط أدناه برابط مباشر لصورة شعارك
@@ -71,6 +73,7 @@ try:
 
 except Exception as e:
     st.error(f"Error: {e}")
+
 
 
 
