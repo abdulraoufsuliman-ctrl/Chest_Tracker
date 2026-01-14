@@ -51,7 +51,7 @@ st.markdown("""
 
     /* رفع الجدول ليغطي خط التابات */
 .stDataFrame {
-    margin-top: -18px;      /* عدّل القيمة إذا لزم */
+    margin-top: -20px;      /* عدّل القيمة إذا لزم */
     position: relative;
     z-index: 2;
 }
@@ -63,12 +63,7 @@ st.markdown("""
 
 /* ================== إزالة الخط الممتد تحت Tabs نهائيًا ================== */
 
-/* جعل التابات ملتصقة بالجدول */
-[data-testid="stTabs"] {
-    margin-bottom: -10px;   /* يلغي الفراغ والخط */
-    position: relative;
-    z-index: 1;
-}
+
 
 /* حافة علوية للجدول لتغطي أي خط */
 .stDataFrame {
@@ -217,6 +212,7 @@ with tab1:
 
 with tab2:
     load_and_display("Results2.xlsx")
+
 
 
 
