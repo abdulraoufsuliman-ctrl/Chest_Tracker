@@ -6,27 +6,39 @@ st.set_page_config(page_title="Player Results", layout="wide")
 
 # --- تحسينات التصميم عبر CSS ---
 st.markdown("""
-    <style>
-    .main { background-color: #0e1117; color: white; }
-    
-    /* تغيير حجم ولون عنوان الصفحة */
-    .main-title {
-        font-size: 50px !important;
-        color: #00e5ff;
-        text-align: center;
-        font-weight: bold;
-        text-shadow: 2px 2px 10px #4B0082;
-        margin-bottom: 20px;
-    }
+<style>
+.main {
+    background-color: #0e1117;
+    color: white;
+}
 
-    /* تحسين شكل جدول البيانات */
-    .stDataFrame {
-        border: 2px solid #4B0082;
-        border-radius: 15px;
-        overflow: hidden;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+/* تقليل الفراغ العلوي */
+.block-container {
+    padding-top: 1.5rem;
+}
+
+/* عنوان الصفحة */
+.main-title {
+    font-size: 42px !important;
+    font-weight: 800;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    background: linear-gradient(90deg, #00e5ff, #7c4dff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0px 4px 12px rgba(124, 77, 255, 0.35);
+}
+
+/* تحسين الجدول */
+.stDataFrame {
+    border: 1px solid rgba(124, 77, 255, 0.6);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+</style>
+""", unsafe_allow_html=True)
 
 # --- إضافة الشعار (Logo) ---
 # يمكنك استبدال الرابط أدناه برابط مباشر لصورة شعارك
@@ -63,6 +75,7 @@ try:
 
 except Exception as e:
     st.error(f"Error: {e}")
+
 
 
 
