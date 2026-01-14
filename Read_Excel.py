@@ -112,13 +112,23 @@ st.markdown(f"""
 
 # ================== دالة تلوين الخلايا ==================
 def highlight_cells(val):
-    # نستخدم لون النص فقط للتأكد من عدم اختفائه خلف أي خلفية
     if isinstance(val, (int, float)):
         if val > 0:
-            return "background-color: #e6f4ea; color: #1e7f43; font-weight: 700; text-align: center;"
-        elif val < 0:
-            return "background-color: #fce8e6; color: #c5221f; font-weight: 700; text-align: center;"
+            return (
+                "background-color: #e6f4ea;"
+                "color: #1e7f43;"
+                "font-weight: 600;"
+                "text-align: center;"
+            )
+        else:
+            return (
+                "background-color: #fce8e6;"
+                "color: #c5221f;"
+                "font-weight: 600;"
+                "text-align: center;"
+            )
     return "text-align: center;"
+
 
 # ================== دالة تحميل وعرض البيانات ==================
 def load_and_display(file_name):
@@ -162,3 +172,4 @@ with tab1:
 
 with tab2:
     load_and_display("Results2.xlsx")
+
