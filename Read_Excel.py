@@ -66,7 +66,15 @@ st.markdown(f"""
 
 
 # ================== تحميل البيانات ==================
-file_name = "Results.xlsx"
+# ================== الفترات ==================
+tab1, tab2 = st.tabs(["الفترة الأولى", "الفترة الثانية"])
+
+with tab1:
+    file_name = "Results1.xlsx"
+
+with tab2:
+    file_name = "Results2.xlsx"
+
 sheet_target = "Results"
 
 df = pd.read_excel(file_name, sheet_name=sheet_target)
@@ -126,6 +134,7 @@ st.dataframe(
     height=650,
     hide_index=True  # ✅ تم إضافة هذا السطر لحذف عمود الترقيم التلقائي
 )
+
 
 
 
