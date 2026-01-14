@@ -54,7 +54,7 @@ st.markdown("""
 /* ================== Elegant Tabs (Segmented Style) ================== */
 
 /* إزالة الخط السفلي */
-[data-testid="stTabs"] > div > div {
+[data-testid="stTabs"] > div {
     border-bottom: none !important;
 }
 [data-testid="stTabs"] > div > div {
@@ -179,6 +179,7 @@ with tab1:
 
 with tab2:
     load_and_display("Results2.xlsx")
+
 
 
 
