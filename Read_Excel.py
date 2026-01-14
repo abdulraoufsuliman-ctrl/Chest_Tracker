@@ -38,7 +38,7 @@ st.markdown("""
     font-weight: 800;
     letter-spacing: 2px;
     color: #000000;
-    line-height: 2.5;    /* ✅ لا تجعلها 1 */
+    line-height: 2.9;    /* ✅ لا تجعلها 1 */
     padding-top: 4px;   /* ✅ أمان إضافي */
 }
 
@@ -128,7 +128,8 @@ styled_df = (
 st.dataframe(
     styled_df,
     use_container_width=True,
-    height=600
+    height=700
 )
+
 
 
