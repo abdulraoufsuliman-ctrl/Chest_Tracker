@@ -24,7 +24,7 @@ st.markdown("""
     align-items: center;
     gap: 16px;
     margin-bottom: 12px;
-    padding-top: 10px;   /* ✅ هذا هو المفتاح */
+    padding-top: 10px;    /* ✅ هذا هو المفتاح */
 }
 
 .logo {
@@ -123,12 +123,6 @@ styled_df = (
 st.dataframe(
     styled_df,
     use_container_width=True,
-    height=700
+    height=700,
+    hide_index=True  # ✅ تم إضافة هذا السطر لحذف عمود الترقيم التلقائي
 )
-
-
-
-
-
-
-
