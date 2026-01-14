@@ -34,10 +34,13 @@ st.markdown("""
 }
 
 .title {
-    font-size: 32px;
+    font-size: 35px;
     font-weight: 800;
-    color: #1a1a1a;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
+    color: #000000;
+    line-height: 2.9;
+    padding-top: 4px;
+
 }
 
 /* ================== إزالة الخط السفلي للتابات وجعلها ملتصقة ================== */
@@ -172,4 +175,5 @@ with tab1:
 
 with tab2:
     load_and_display("Results2.xlsx")
+
 
