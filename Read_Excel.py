@@ -18,6 +18,30 @@ st.markdown("""
 .block-container {
     padding-top: 1.5rem;
 }
+/* Header layout */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+    padding-top: 10px;   /* ✅ هذا هو المفتاح */
+}
+
+.logo {
+    width: 80px;
+    height: auto;
+    display: block;
+}
+
+.title {
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #000000;
+    line-height: 2;    /* ✅ لا تجعلها 1 */
+    padding-top: 4px;   /* ✅ أمان إضافي */
+}
+
 
 /* جدول */
 .stDataFrame {
