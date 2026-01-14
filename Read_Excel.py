@@ -57,6 +57,14 @@ st.markdown("""
 [data-testid="stTabs"] > div > div {
     border-bottom: none !important;
 }
+[data-testid="stTabs"] > div > div {
+    border-bottom: none !important;
+}
+/* إزالة أي فاصل تلقائي بعد Tabs */
+[data-testid="stTabs"] + div {
+    border-top: none !important;
+}
+
 
 /* حاوية التابات */
 [data-testid="stTabs"] {
@@ -171,6 +179,7 @@ with tab1:
 
 with tab2:
     load_and_display("Results2.xlsx")
+
 
 
 
