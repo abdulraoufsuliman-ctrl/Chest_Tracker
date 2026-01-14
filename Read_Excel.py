@@ -107,7 +107,7 @@ def load_and_display(file_name):
     st.dataframe(
         styled_df,
         use_container_width=True,
-        height=600
+        height=600,
         hide_index=True
     )
 
@@ -119,4 +119,5 @@ with tab1:
 
 with tab2:
     load_and_display("Results2.xlsx")
+
 
