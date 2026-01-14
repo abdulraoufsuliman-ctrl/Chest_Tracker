@@ -58,13 +58,12 @@ st.markdown("""
 logo_url = "https://raw.githubusercontent.com/abdulraoufsuliman-ctrl/Chest_Tracker/main/logo.png"
 
 st.markdown(f"""
-<div style="display:flex; align-items:center; gap:16px; padding-top:10px; margin-bottom:16px;">
-    <img src="{logo_url}" style="width:70px;">
-    <div style="font-size:40px; font-weight:700; letter-spacing:1.5px; color:#000;">
-        [RUM] BOTTLES AND BATTLE
-    </div>
+<div class="header">
+    <img src="{logo_url}" class="logo">
+    <div class="title">[RUM] BOTTLES AND BATTLE</div>
 </div>
 """, unsafe_allow_html=True)
+
 
 # ================== تحميل البيانات ==================
 file_name = "Results.xlsx"
@@ -126,6 +125,7 @@ st.dataframe(
     use_container_width=True,
     height=700
 )
+
 
 
 
