@@ -34,7 +34,7 @@ st.markdown("""
 }
 
 .title {
-    font-size: 40px;
+    font-size: 35px;
     font-weight: 800;
     letter-spacing: 2px;
     color: #000000;
@@ -126,5 +126,6 @@ st.dataframe(
     height=600,
     hide_index=True  # ✅ تم إضافة هذا السطر لحذف عمود الترقيم التلقائي
 )
+
 
 
