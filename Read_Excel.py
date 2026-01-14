@@ -50,10 +50,26 @@ st.markdown("""
 }
 
 .stDataFrame thead th {
-    background-color: #f8f9fa;
-    color: #202124;
+    background-color: #e0e3e7;
+    color: #1f1f1f;
     font-weight: 600;
     text-align: center;
+}
+.stDataFrame tbody td:first-child,
+.stDataFrame thead th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 9;
+    background-color: #f1f3f4;
+    font-weight: 600;
+    text-align: left;
+    border-right: 1px solid #c4c7cc;
+}
+
+/* ===== تمييز تقاطع (Name + Header) ===== */
+.stDataFrame thead th:first-child {
+    z-index: 11;
+    background-color: #d2d6db;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -121,4 +137,5 @@ st.dataframe(
     use_container_width=True,
     height=700
 )
+
 
