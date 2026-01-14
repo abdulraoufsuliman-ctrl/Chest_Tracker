@@ -5,7 +5,6 @@ import pandas as pd
 st.set_page_config(page_title="Player Results", layout="wide")
 
 # --- تحسينات التصميم عبر CSS ---
-st.markdown("""
 <style>
 .main {
     background-color: #0e1117;
@@ -17,25 +16,22 @@ st.markdown("""
     padding-top: 1.5rem;
 }
 
-/* عنوان الصفحة */
+/* عنوان الصفحة - أسود */
 .main-title {
     font-size: 42px !important;
     font-weight: 800;
     text-align: center;
     letter-spacing: 2px;
     margin-bottom: 12px;
-    background: linear-gradient(90deg, #00e5ff, #7c4dff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0px 4px 12px rgba(124, 77, 255, 0.35);
+    color: #000000;
 }
 
-/* تحسين الجدول */
+/* جدول بحواف حادة */
 .stDataFrame {
-    border: 1px solid rgba(124, 77, 255, 0.6);
-    border-radius: 18px;
+    border: 1px solid #000000;
+    border-radius: 0px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    box-shadow: none;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -75,6 +71,7 @@ try:
 
 except Exception as e:
     st.error(f"Error: {e}")
+
 
 
 
