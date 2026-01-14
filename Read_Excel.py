@@ -72,7 +72,7 @@ st.markdown("""
     border-radius: 10px;
     margin-right: 6px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 16px;
     color: #3c4043;
     background: transparent;
     border: none;
@@ -171,6 +171,7 @@ with tab1:
 
 with tab2:
     load_and_display("Results2.xlsx")
+
 
 
 
