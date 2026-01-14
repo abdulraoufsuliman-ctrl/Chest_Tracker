@@ -50,13 +50,7 @@ st.markdown("""
     border-radius: 0;
 }
 
-.stDataFrame thead th {
-    background-color: #e0e3e7;
-    color: #1f1f1f;
-    font-weight: 600;
-    text-align: center;
-    border-bottom: 1px solid #c4c7cc;
-}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -130,6 +124,7 @@ st.dataframe(
     use_container_width=True,
     height=700
 )
+
 
 
 
