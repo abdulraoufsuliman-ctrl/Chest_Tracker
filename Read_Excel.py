@@ -43,38 +43,45 @@ st.markdown("""
     padding-top: 4px;
 }
 
-/* حاوية الجدول مع تمرير أفقي */
-.table-container {
-    overflow-x: auto;
-    position: relative;
-    border: 1px solid #dadce0;
-    background-color: white;
+/* تثبيت العمود الأول في الجدول */
+[data-testid="stDataFrame"] {
+    overflow-x: auto !important;
+}
+
+[data-testid="stDataFrame"] table {
+    min-width: 100%;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
 }
 
 /* تثبيت العمود الأول */
-.stDataFrame table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-.stDataFrame table th:first-child,
-.stDataFrame table td:first-child {
-    position: sticky;
-    left: 0;
-    z-index: 2;
+[data-testid="stDataFrame"] table thead tr th:first-child,
+[data-testid="stDataFrame"] table tbody tr td:first-child {
+    position: sticky !important;
+    left: 0 !important;
     background-color: white !important;
-    border-right: 2px solid #e0e0e0;
+    z-index: 10 !important;
+    border-right: 2px solid #e0e0e0 !important;
+    box-shadow: 2px 0 5px -2px rgba(0,0,0,0.1) !important;
 }
 
-/* التأكد من أن الخلفية تظهر فوق الصفوف الأخرى */
-.stDataFrame table th:first-child {
-    z-index: 3;
+/* رأس العمود الثابت */
+[data-testid="stDataFrame"] table thead tr th:first-child {
+    z-index: 20 !important;
+    top: 0 !important;
 }
 
-/* إخفاء شريط الفهرس (إن وجد) */
-.stDataFrame table th:first-child:contains('index'),
-.stDataFrame table td:first-child:contains('index') {
-    display: none;
+/* تأكد من أن المحتوى محاذي بشكل صحيح */
+[data-testid="stDataFrame"] table th:first-child,
+[data-testid="stDataFrame"] table td:first-child {
+    min-width: 120px !important;
+    max-width: 120px !important;
+    white-space: nowrap !important;
+}
+
+/* خلايا إيجابية وسلبية */
+[data-testid="stDataFrame"] td[data-testid="StyledDataCell"] {
+    text-align: center !important;
 }
 
 </style>
@@ -86,7 +93,7 @@ logo_url = "https://raw.githubusercontent.com/abdulraoufsuliman-ctrl/Chest_Track
 st.markdown(f"""
 <div class="header">
     <img src="{logo_url}" class="logo">
-    <div class="title">[RUM] BOTT LES AND BATTLE</div>
+    <div class="title">[RUM] BOTTLES AND BATTLE</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -139,12 +146,9 @@ styled_df = (
 )
 
 # ================== عرض الجدول ==================
-# استخدام div محيط لتطبيق التمرير والتثبيت
-st.markdown('<div class="table-container">', unsafe_allow_html=True)
 st.dataframe(
     styled_df,
     use_container_width=True,
     height=600,
     hide_index=True
 )
-st.markdown('</div>', unsafe_allow_html=True)
