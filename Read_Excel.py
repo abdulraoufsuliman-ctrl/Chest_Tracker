@@ -58,8 +58,8 @@ st.markdown("""
 .stDataFrame tbody td:first-child,
 .stDataFrame thead th:first-child {
     position: sticky;
-    left: 0;
-    z-index: 9;
+    left: 1;
+    z-index: 8;
     background-color: #f1f3f4;
     font-weight: 600;
     text-align: left;
@@ -137,5 +137,6 @@ st.dataframe(
     use_container_width=True,
     height=700
 )
+
 
 
