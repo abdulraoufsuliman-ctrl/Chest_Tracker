@@ -69,10 +69,11 @@ try:
        # st.info("💡 The leaderboard is updated live based on game progress.")
         
         # عرض الجدول بارتفاع كبير وعرض كامل
-        st.dataframe(df, use_container_width=True, hide_index=True, height=600) 
+        st.dataframe(df, use_container_width=True, hide_index=True, height=700) 
 
 except Exception as e:
     st.error(f"Error: {e}")
+
 
 
 
