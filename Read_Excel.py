@@ -18,13 +18,14 @@ st.markdown("""
 .block-container {
     padding-top: 1.5rem;
 }
+
 /* Header layout */
 .header {
     display: flex;
     align-items: center;
     gap: 16px;
     margin-bottom: 12px;
-    padding-top: 10px;    /* ✅ هذا هو المفتاح */
+    padding-top: 10px;
 }
 
 .logo {
@@ -38,18 +39,43 @@ st.markdown("""
     font-weight: 800;
     letter-spacing: 2px;
     color: #000000;
-    line-height: 2.9;    /* ✅ لا تجعلها 1 */
-    padding-top: 4px;   /* ✅ أمان إضافي */
+    line-height: 2.9;
+    padding-top: 4px;
 }
 
-
-/* جدول */
-.stDataFrame {
-    background-color: #ffffff;
+/* حاوية الجدول مع تمرير أفقي */
+.table-container {
+    overflow-x: auto;
+    position: relative;
     border: 1px solid #dadce0;
-    border-radius: 0;
+    background-color: white;
 }
 
+/* تثبيت العمود الأول */
+.stDataFrame table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.stDataFrame table th:first-child,
+.stDataFrame table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background-color: white !important;
+    border-right: 2px solid #e0e0e0;
+}
+
+/* التأكد من أن الخلفية تظهر فوق الصفوف الأخرى */
+.stDataFrame table th:first-child {
+    z-index: 3;
+}
+
+/* إخفاء شريط الفهرس (إن وجد) */
+.stDataFrame table th:first-child:contains('index'),
+.stDataFrame table td:first-child:contains('index') {
+    display: none;
+}
 
 </style>
 """, unsafe_allow_html=True)
@@ -60,10 +86,9 @@ logo_url = "https://raw.githubusercontent.com/abdulraoufsuliman-ctrl/Chest_Track
 st.markdown(f"""
 <div class="header">
     <img src="{logo_url}" class="logo">
-    <div class="title">[RUM] BOTTLES AND BATTLE</div>
+    <div class="title">[RUM] BOTT LES AND BATTLE</div>
 </div>
 """, unsafe_allow_html=True)
-
 
 # ================== تحميل البيانات ==================
 file_name = "Results.xlsx"
@@ -105,14 +130,8 @@ def highlight_cells(val):
 # ================== تنسيق الجدول ==================
 styled_df = (
     df.style
-    # فصل الآلاف
-    
     .format("{:,}", subset=num_cols)
-
-    # تلوين الأعمدة الرقمية (تجاوز عمود الاسم)
     .applymap(highlight_cells, subset=df.columns[2:])
-
-    # خصائص عامة
     .set_properties(**{
         "border": "1px solid #e0e0e0",
         "font-size": "14px"
@@ -120,12 +139,12 @@ styled_df = (
 )
 
 # ================== عرض الجدول ==================
+# استخدام div محيط لتطبيق التمرير والتثبيت
+st.markdown('<div class="table-container">', unsafe_allow_html=True)
 st.dataframe(
     styled_df,
     use_container_width=True,
     height=600,
-    hide_index=True  # ✅ تم إضافة هذا السطر لحذف عمود الترقيم التلقائي
+    hide_index=True
 )
-
-
-
+st.markdown('</div>', unsafe_allow_html=True)
