@@ -37,7 +37,7 @@ st.markdown("""
     font-weight: 800;
     letter-spacing: 2px;
     color: #000000;
-    line-height: 1.2;    /* ✅ لا تجعلها 1 */
+    line-height: 1.9;    /* ✅ لا تجعلها 1 */
     padding-top: 4px;   /* ✅ أمان إضافي */
 }
 
@@ -75,4 +75,5 @@ try:
 
 except Exception as e:
     st.error(f"Error: {e}")
+
 
