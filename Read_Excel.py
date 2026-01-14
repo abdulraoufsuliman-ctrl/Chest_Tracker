@@ -73,7 +73,14 @@ file_name = "Results.xlsx"
 sheet_target = "Results"
 
 df = pd.read_excel(file_name, sheet_name=sheet_target)
+
+# تنظيف الصفوف والأعمدة الفارغة
 df = df.dropna(how="all", axis=0).dropna(how="all", axis=1)
+
+# ======== هذا مكان السطرين بالضبط ========
+num_cols = df.select_dtypes(include="number").columns
+df[num_cols] = df[num_cols].fillna(0).astype(int)
+# ========================================
 
 # ترتيب حسب النقاط (العمود الثاني)
 df = df.dropna(subset=[df.columns[1]])
@@ -100,6 +107,7 @@ def highlight_cells(val):
 
 styled_df = (
     df.style
+    .format("{:,}", subset=df.select_dtypes(include="number").columns)
     .applymap(highlight_cells, subset=df.columns[2:])  # تلوين الأعمدة الرقمية
     .set_properties(**{
         "border": "1px solid #e0e0e0",
@@ -113,3 +121,4 @@ st.dataframe(
     use_container_width=True,
     height=700
 )
+
