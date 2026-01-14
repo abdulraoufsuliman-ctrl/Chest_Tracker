@@ -7,140 +7,95 @@ st.set_page_config(
     layout="wide"
 )
 
-# ================== CSS ==================
+# ================== CSS المطور لتحسين المظهر ==================
 st.markdown("""
 <style>
 .main {
     background-color: #f5f7fa;
 }
 
-/* تقليل الفراغ العلوي */
+/* تقليل الفراغ العلوي وتوسيط المحتوى */
 .block-container {
     padding-top: 1.5rem;
+    max-width: 95%;
 }
 
 /* Header layout */
 .header {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 12px;
-    padding-top: 10px;
+    gap: 20px;
+    margin-bottom: 25px;
 }
 
 .logo {
-    width: 80px;
+    width: 70px;
     height: auto;
-    display: block;
 }
 
 .title {
-    font-size: 35px;
+    font-size: 32px;
     font-weight: 800;
-    letter-spacing: 2px;
-    color: #000000;
-    line-height: 2.9;
-    padding-top: 4px;
+    color: #1a1a1a;
+    letter-spacing: 1px;
 }
 
-/* جدول */
-.stDataFrame {
-    background-color: #ffffff;
-    border: 1px solid #dadce0;
-    border-radius: 0;
+/* ================== إزالة الخط السفلي للتابات وجعلها ملتصقة ================== */
 
-    /* رفع الجدول ليغطي خط التابات */
-.stDataFrame {
-    margin-top: -20px;      /* عدّل القيمة إذا لزم */
-    position: relative;
-    z-index: 2;
-}
-
-}
-/* ================== تحسين Tabs ================== */
-
-/* ================== Elegant Tabs (Segmented Style) ================== */
-
-/* ================== إزالة الخط الممتد تحت Tabs نهائيًا ================== */
-
-
-
-/* حافة علوية للجدول لتغطي أي خط */
-.stDataFrame {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-
-/* إزالة أي حدود أساسية */
-[data-testid="stTabs"] * {
-    border-bottom: none !important;
-    box-shadow: none !important;
-}
-
-/* إزالة العنصر الوهمي الذي يرسم الخط */
-[data-testid="stTabs"] div::before,
-[data-testid="stTabs"] div::after {
-    content: none !important;
-    display: none !important;
-}
-
-/* إزالة الفاصل الذي يضيفه Streamlit بعد Tabs */
-[data-testid="stTabs"] + div {
-    border-top: none !important;
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-}
-
-/* احتياطي أخير */
-[data-testid="stTabs"] hr {
-    display: none !important;
-}
-
-
-
-/* حاوية التابات */
+/* إزالة الخط الممتد تحت التابات */
 [data-testid="stTabs"] {
-    background: rgba(255,255,255,0.55);
-    padding: 6px;
-    border-radius: 12px;
-    display: inline-block;
+    border-bottom: none !important;
 }
 
-/* التاب */
+/* إزالة المسافة الفاصلة بين التابات والمحتوى (الجدول) */
+[data-testid="stTabContent"] {
+    padding-top: 0px !important;
+}
+
+/* إزالة الخط السفلي الافتراضي من Streamlit */
+[data-testid="stTabs"] [data-baseweb="tab-border"] {
+    display: none !important;
+}
+
+/* تنسيق حاوية التابات */
+[data-testid="stTabs"] [role="tablist"] {
+    gap: 5px; 
+}
+
+/* تصميم التاب الفردي */
 [data-testid="stTab"] {
-    padding: 10px 26px;
-    border-radius: 10px;
-    margin-right: 6px;
+    height: 45px;
+    background-color: #f0f2f6; /* لون خلفية خفيف للتابات غير النشطة */
+    color: #31333F !important; /* إظهار النص بوضوح */
+    border-radius: 8px 8px 0 0 !important; /* حواف علوية دائرية قليلاً */
+    border: 1px solid #ddd !important;
+    border-bottom: none !important;
+    padding: 0 30px !important;
     font-weight: 600;
-    font-size: 16px;
-    color: #3c4043;
-    background: transparent;
-    border: none;
-    transition: all 0.25s ease;
-}
-
-/* Hover */
-[data-testid="stTab"]:hover {
-    background-color: rgba(66,133,244,0.08);
 }
 
 /* التاب النشط */
 [data-testid="stTab"][aria-selected="true"] {
-    background: linear-gradient(
-        135deg,
-        #4f8cff,
-        #3b6df2
-    );
-    color: #ffffff;
-    box-shadow: 0 6px 18px rgba(59,109,242,0.35);
+    background: linear-gradient(135deg, #4f8cff, #3b6df2) !important;
+    color: white !important;
+    border-color: #3b6df2 !important;
 }
 
-/* إزالة أي underline */
-[data-testid="stTab"]::after {
+/* إزالة الخط الملون المتحرك تحت التاب */
+[data-testid="stTab"] div[data-baseweb="tab-highlight"] {
     display: none !important;
 }
 
+/* ================== تنسيق الجدول (حواف حادة) ================== */
+.stDataFrame {
+    margin-top: -1px !important; /* سحب الجدول للأعلى ليلتصق بالتابات */
+}
+
+/* حواف حادة للجدول */
+[data-testid="stTable"] , [data-testid="stDataFrame"] {
+    border: 1px solid #ddd !important;
+    border-radius: 0px !important; 
+}
 
 </style>
 """, unsafe_allow_html=True)
@@ -157,54 +112,49 @@ st.markdown(f"""
 
 # ================== دالة تلوين الخلايا ==================
 def highlight_cells(val):
+    # نستخدم لون النص فقط للتأكد من عدم اختفائه خلف أي خلفية
     if isinstance(val, (int, float)):
         if val > 0:
-            return (
-                "background-color: #e6f4ea;"
-                "color: #1e7f43;"
-                "font-weight: 600;"
-                "text-align: center;"
-            )
-        else:
-            return (
-                "background-color: #fce8e6;"
-                "color: #c5221f;"
-                "font-weight: 600;"
-                "text-align: center;"
-            )
+            return "background-color: #e6f4ea; color: #1e7f43; font-weight: 700; text-align: center;"
+        elif val < 0:
+            return "background-color: #fce8e6; color: #c5221f; font-weight: 700; text-align: center;"
     return "text-align: center;"
 
 # ================== دالة تحميل وعرض البيانات ==================
 def load_and_display(file_name):
-    df = pd.read_excel(file_name, sheet_name="Results")
+    try:
+        # قراءة البيانات
+        df = pd.read_excel(file_name, sheet_name="Results")
+        
+        # تنظيف البيانات
+        df = df.dropna(how="all", axis=0).dropna(how="all", axis=1)
 
-    df = df.dropna(how="all", axis=0).dropna(how="all", axis=1)
+        # تحويل الأعمدة الرقمية وتنسيقها
+        num_cols = df.select_dtypes(include="number").columns
+        df[num_cols] = df[num_cols].fillna(0)
 
-    num_cols = df.select_dtypes(include="number").columns
-    df[num_cols] = df[num_cols].fillna(0).astype(int)
+        # تنسيق الستايل
+        styled_df = (
+            df.style
+            .format("{:,}", subset=num_cols)
+            .applymap(highlight_cells, subset=num_cols) # تطبيق التلوين على كل الأرقام
+            .set_properties(**{
+                "border": "1px solid #e0e0e0",
+                "font-size": "14px"
+            })
+        )
 
-    df = df.dropna(subset=[df.columns[1]])
-    df = df.sort_values(by=df.columns[1], ascending=False)
-    df = df.reset_index(drop=True)
-
-    styled_df = (
-        df.style
-        .format("{:,}", subset=num_cols)
-        .applymap(highlight_cells, subset=df.columns[2:])
-        .set_properties(**{
-            "border": "1px solid #e0e0e0",
-            "font-size": "14px"
-        })
-    )
-
-    st.dataframe(
-        styled_df,
-        use_container_width=True,
-        height=600,
-        hide_index=True
-    )
+        st.dataframe(
+            styled_df,
+            use_container_width=True,
+            height=600,
+            hide_index=True
+        )
+    except Exception as e:
+        st.error(f"Error loading {file_name}: {e}")
 
 # ================== Tabs (الفترات) ==================
+# تأكدنا هنا أن أسماء الفترات مكتوبة بوضوح
 tab1, tab2 = st.tabs(["Period 1", "Period 2"])
 
 with tab1:
@@ -212,15 +162,3 @@ with tab1:
 
 with tab2:
     load_and_display("Results2.xlsx")
-
-
-
-
-
-
-
-
-
-
-
-
