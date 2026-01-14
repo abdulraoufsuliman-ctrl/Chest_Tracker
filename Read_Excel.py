@@ -38,7 +38,7 @@ st.markdown("""
     font-weight: 800;
     letter-spacing: 2px;
     color: #000000;
-    line-height: 2;    /* ✅ لا تجعلها 1 */
+    line-height: 2.2;    /* ✅ لا تجعلها 1 */
     padding-top: 4px;   /* ✅ أمان إضافي */
 }
 
@@ -130,3 +130,4 @@ st.dataframe(
     use_container_width=True,
     height=800
 )
+
