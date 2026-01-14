@@ -4,7 +4,7 @@ import pandas as pd
 # إعداد الصفحة بالعرض الكامل
 st.set_page_config(page_title="Player Results", layout="wide")
 
-# --- تحسينات التصميم عبر CSS ---
+# ================== CSS ==================
 st.markdown("""
 <style>
 .main {
@@ -17,13 +17,12 @@ st.markdown("""
     padding-top: 1.5rem;
 }
 
-/* عنوان الصفحة - أسود */
+/* عنوان الصفحة */
 .main-title {
     font-size: 42px !important;
     font-weight: 800;
-    text-align: center;
     letter-spacing: 2px;
-    margin-bottom: 12px;
+    margin: 0;
     color: #000000;
 }
 
@@ -37,25 +36,23 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-
-# --- إضافة الشعار (Logo) ---
-# يمكنك استبدال الرابط أدناه برابط مباشر لصورة شعارك
+# ================== HEADER ==================
 logo_url = "https://raw.githubusercontent.com/abdulraoufsuliman-ctrl/Chest_Tracker/main/logo.png"
 
-# عرض الشعار في المنتصف
-col1, col2, col3 = st.columns([1, 1, 1])
+col1, col2 = st.columns([1, 6], vertical_alignment="center")
+
+with col1:
+    st.image(logo_url, width=90)
+
 with col2:
-    # إذا كان لديك شعار، سيظهر هنا، وإذا لم يوجد سيتجاهله الكود
-    try:
-        st.image(logo_url, width=200)
-    except:
-        pass
+    st.markdown(
+        '<p class="main-title">[RUM] BOTTLES AND BATTLE</p>',
+        unsafe_allow_html=True
+    )
 
-# --- عنوان الصفحة بحجم مخصص ---
-st.markdown('<p class="main-title">[RUM] BOTTLES AND BATTLE</p>', unsafe_allow_html=True)
-
+# ================== DATA ==================
 file_name = 'Results.xlsx'
-sheet_target = 'Results' 
+sheet_target = 'Results'
 
 try:
     df = pd.read_excel(file_name, sheet_name=sheet_target)
@@ -65,14 +62,17 @@ try:
         df = df.dropna(subset=[df.columns[0], df.columns[1]])
         df = df.sort_values(by=df.columns[1], ascending=False)
 
-        # إضافة نص "آخر تحديث" ليعرف اللاعبون دقة البيانات
-       # st.info("💡 The leaderboard is updated live based on game progress.")
-        
-        # عرض الجدول بارتفاع كبير وعرض كامل
-        st.dataframe(df, use_container_width=True, hide_index=True, height=700) 
+        st.dataframe(
+            df,
+            use_container_width=True,
+            hide_index=True,
+            height=700
+        )
 
 except Exception as e:
     st.error(f"Error: {e}")
+
+
 
 
 
