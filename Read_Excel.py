@@ -82,6 +82,7 @@ df[num_cols] = df[num_cols].fillna(0).astype(int)
 # ترتيب حسب العمود الثاني (النقاط)
 df = df.dropna(subset=[df.columns[1]])
 df = df.sort_values(by=df.columns[1], ascending=False)
+df = df.reset_index(drop=True)
 
 # ================== دالة تلوين الخلايا ==================
 def highlight_cells(val):
@@ -106,7 +107,7 @@ def highlight_cells(val):
 styled_df = (
     df.style
     # فصل الآلاف
-    .hide(axis="index")
+    
     .format("{:,}", subset=num_cols)
 
     # تلوين الأعمدة الرقمية (تجاوز عمود الاسم)
@@ -125,6 +126,7 @@ st.dataframe(
     use_container_width=True,
     height=700
 )
+
 
 
 
