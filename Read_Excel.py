@@ -53,17 +53,33 @@ st.markdown("""
 
 /* ================== Elegant Tabs (Segmented Style) ================== */
 
-/* إزالة الخط السفلي */
-[data-testid="stTabs"] > div {
+/* ================== إزالة الخط الممتد تحت Tabs نهائيًا ================== */
+
+/* إزالة أي حدود أساسية */
+[data-testid="stTabs"] * {
     border-bottom: none !important;
+    box-shadow: none !important;
 }
-[data-testid="stTabs"] > div > div {
-    border-bottom: none !important;
+
+/* إزالة العنصر الوهمي الذي يرسم الخط */
+[data-testid="stTabs"] div::before,
+[data-testid="stTabs"] div::after {
+    content: none !important;
+    display: none !important;
 }
-/* إزالة أي فاصل تلقائي بعد Tabs */
+
+/* إزالة الفاصل الذي يضيفه Streamlit بعد Tabs */
 [data-testid="stTabs"] + div {
     border-top: none !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
 }
+
+/* احتياطي أخير */
+[data-testid="stTabs"] hr {
+    display: none !important;
+}
+
 
 
 /* حاوية التابات */
@@ -179,6 +195,7 @@ with tab1:
 
 with tab2:
     load_and_display("Results2.xlsx")
+
 
 
 
