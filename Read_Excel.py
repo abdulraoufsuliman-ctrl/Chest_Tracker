@@ -39,7 +39,9 @@ st.markdown("""
     font-weight: 700;
     letter-spacing: 1.5px;
     color: #000000;
-    line-height: 1.2;
+    line-height: 2.2;
+    padding-top: 4px;   /* ✅ أمان إضافي */
+
 }
 
 /* جدول */
@@ -55,8 +57,8 @@ st.markdown("""
     font-weight: 600;
     text-align: center;
 }
-.stDataFrame tbody td:nth-child(2),
-.stDataFrame thead th:nth-child(2) {
+.stDataFrame tbody td:nth-child(3),
+.stDataFrame thead th:nth-child(3) {
     position: sticky;
     left: 48px;
     z-index: 8;
@@ -137,6 +139,7 @@ st.dataframe(
     use_container_width=True,
     height=700
 )
+
 
 
 
