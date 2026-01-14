@@ -43,45 +43,65 @@ st.markdown("""
     padding-top: 4px;
 }
 
-/* تثبيت العمود الأول في الجدول */
-[data-testid="stDataFrame"] {
-    overflow-x: auto !important;
+/* جدول HTML مخصص مع تثبيت العمود الأول */
+.fixed-column-table {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #dadce0;
+    background-color: white;
+    margin-bottom: 20px;
 }
 
-[data-testid="stDataFrame"] table {
-    min-width: 100%;
-    border-collapse: separate !important;
-    border-spacing: 0 !important;
+.fixed-column-table table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1000px;
+}
+
+.fixed-column-table th,
+.fixed-column-table td {
+    padding: 10px 12px;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+    font-size: 14px;
+}
+
+.fixed-column-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 /* تثبيت العمود الأول */
-[data-testid="stDataFrame"] table thead tr th:first-child,
-[data-testid="stDataFrame"] table tbody tr td:first-child {
-    position: sticky !important;
-    left: 0 !important;
-    background-color: white !important;
-    z-index: 10 !important;
-    border-right: 2px solid #e0e0e0 !important;
-    box-shadow: 2px 0 5px -2px rgba(0,0,0,0.1) !important;
+.fixed-column-table th:first-child,
+.fixed-column-table td:first-child {
+    position: sticky;
+    left: 0;
+    background-color: white;
+    z-index: 5;
+    border-right: 2px solid #e0e0e0;
+    min-width: 120px;
+    text-align: left;
 }
 
-/* رأس العمود الثابت */
-[data-testid="stDataFrame"] table thead tr th:first-child {
-    z-index: 20 !important;
-    top: 0 !important;
+.fixed-column-table th:first-child {
+    z-index: 15;
+    background-color: #f8f9fa;
 }
 
-/* تأكد من أن المحتوى محاذي بشكل صحيح */
-[data-testid="stDataFrame"] table th:first-child,
-[data-testid="stDataFrame"] table td:first-child {
-    min-width: 120px !important;
-    max-width: 120px !important;
-    white-space: nowrap !important;
+/* تلوين الخلايا */
+.positive-cell {
+    background-color: #e6f4ea !important;
+    color: #1e7f43 !important;
+    font-weight: 600 !important;
 }
 
-/* خلايا إيجابية وسلبية */
-[data-testid="stDataFrame"] td[data-testid="StyledDataCell"] {
-    text-align: center !important;
+.negative-cell {
+    background-color: #fce8e6 !important;
+    color: #c5221f !important;
+    font-weight: 600 !important;
 }
 
 </style>
@@ -115,40 +135,41 @@ df = df.dropna(subset=[df.columns[1]])
 df = df.sort_values(by=df.columns[1], ascending=False)
 df = df.reset_index(drop=True)
 
-# ================== دالة تلوين الخلايا ==================
-def highlight_cells(val):
+# ================== إنشاء جدول HTML يدويًا ==================
+
+# وظيفة لتحديد لون الخلية
+def get_cell_class(val):
     if isinstance(val, (int, float)):
         if val > 0:
-            return (
-                "background-color: #e6f4ea;"
-                "color: #1e7f43;"
-                "font-weight: 600;"
-                "text-align: center;"
-            )
-        else:
-            return (
-                "background-color: #fce8e6;"
-                "color: #c5221f;"
-                "font-weight: 600;"
-                "text-align: center;"
-            )
-    return "text-align: center;"
+            return "positive-cell"
+        elif val == 0:
+            return "negative-cell"
+    return ""
 
-# ================== تنسيق الجدول ==================
-styled_df = (
-    df.style
-    .format("{:,}", subset=num_cols)
-    .applymap(highlight_cells, subset=df.columns[2:])
-    .set_properties(**{
-        "border": "1px solid #e0e0e0",
-        "font-size": "14px"
-    })
-)
+# بداية الجدول
+html_table = '<div class="fixed-column-table"><table>'
+
+# رأس الجدول
+html_table += '<thead><tr>'
+for col in df.columns:
+    html_table += f'<th>{col}</th>'
+html_table += '</tr></thead>'
+
+# جسم الجدول
+html_table += '<tbody>'
+for _, row in df.iterrows():
+    html_table += '<tr>'
+    for idx, (col_name, value) in enumerate(row.items()):
+        cell_class = get_cell_class(value) if idx > 0 else ""
+        # تنسيق الأرقام بفواصل الآلاف
+        if isinstance(value, (int, float)) and idx > 0:
+            display_value = f"{value:,}"
+        else:
+            display_value = str(value)
+        
+        html_table += f'<td class="{cell_class}">{display_value}</td>'
+    html_table += '</tr>'
+html_table += '</tbody></table></div>'
 
 # ================== عرض الجدول ==================
-st.dataframe(
-    styled_df,
-    use_container_width=True,
-    height=600,
-    hide_index=True
-)
+st.markdown(html_table, unsafe_allow_html=True)
