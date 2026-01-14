@@ -66,14 +66,43 @@ st.markdown(f"""
 
 
 # ================== تحميل البيانات ==================
+def load_and_display(file_name):
+    df = pd.read_excel(file_name, sheet_name="Results")
+
+    df = df.dropna(how="all", axis=0).dropna(how="all", axis=1)
+
+    num_cols = df.select_dtypes(include="number").columns
+    df[num_cols] = df[num_cols].fillna(0).astype(int)
+
+    df = df.dropna(subset=[df.columns[1]])
+    df = df.sort_values(by=df.columns[1], ascending=False)
+    df = df.reset_index(drop=True)
+
+    styled_df = (
+        df.style
+        .format("{:,}", subset=num_cols)
+        .applymap(highlight_cells, subset=df.columns[2:])
+        .set_properties(**{
+            "border": "1px solid #e0e0e0",
+            "font-size": "14px"
+        })
+    )
+
+    st.dataframe(
+        styled_df,
+        use_container_width=True,
+        height=600
+    )
+
 # ================== الفترات ==================
-period = st.tabs(["Period 1", "Period 2"])
+tab1, tab2 = st.tabs(["Period 1", "Period 2"])
 
 with tab1:
-    file_name = "Results1.xlsx"
+    load_and_display("Results1.xlsx")
 
 with tab2:
-    file_name = "Results2.xlsx"
+    load_and_display("Results2.xlsx")
+
 
 sheet_target = "Results"
 
@@ -134,6 +163,7 @@ st.dataframe(
     height=650,
     hide_index=True  # ✅ تم إضافة هذا السطر لحذف عمود الترقيم التلقائي
 )
+
 
 
 
