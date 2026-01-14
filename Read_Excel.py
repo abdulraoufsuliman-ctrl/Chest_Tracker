@@ -17,13 +17,28 @@ st.markdown("""
     padding-top: 1.5rem;
 }
 
-/* عنوان الصفحة */
-.main-title {
-    font-size: 42px !important;
+/* Header layout */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+}
+
+/* Logo */
+.logo {
+    width: 80px;
+    height: auto;
+    display: block;
+}
+
+/* Title */
+.title {
+    font-size: 42px;
     font-weight: 800;
     letter-spacing: 2px;
-    margin: 0;
     color: #000000;
+    line-height: 1;
 }
 
 /* جدول بحواف حادة */
@@ -39,24 +54,20 @@ st.markdown("""
 # ================== HEADER ==================
 logo_url = "https://raw.githubusercontent.com/abdulraoufsuliman-ctrl/Chest_Tracker/main/logo.png"
 
-col1, col2 = st.columns([1, 6], vertical_alignment="center")
-
-with col1:
-    st.image(logo_url, width=90)
-
-with col2:
-    st.markdown(
-        '<p class="main-title">[RUM] BOTTLES AND BATTLE</p>',
-        unsafe_allow_html=True
-    )
+st.markdown(f"""
+<div class="header">
+    <img src="{logo_url}" class="logo">
+    <div class="title">[RUM] BOTTLES AND BATTLE</div>
+</div>
+""", unsafe_allow_html=True)
 
 # ================== DATA ==================
-file_name = 'Results.xlsx'
-sheet_target = 'Results'
+file_name = "Results.xlsx"
+sheet_target = "Results"
 
 try:
     df = pd.read_excel(file_name, sheet_name=sheet_target)
-    df = df.dropna(how='all', axis=0).dropna(how='all', axis=1)
+    df = df.dropna(how="all", axis=0).dropna(how="all", axis=1)
 
     if not df.empty:
         df = df.dropna(subset=[df.columns[0], df.columns[1]])
@@ -71,19 +82,3 @@ try:
 
 except Exception as e:
     st.error(f"Error: {e}")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
