@@ -51,33 +51,55 @@ st.markdown("""
 }
 /* ================== تحسين Tabs ================== */
 
-/* إزالة الخط السفلي الافتراضي */
+/* ================== Elegant Tabs (Segmented Style) ================== */
+
+/* إزالة الخط السفلي */
 [data-testid="stTabs"] > div > div {
     border-bottom: none !important;
 }
 
-/* شكل التابات */
+/* حاوية التابات */
+[data-testid="stTabs"] {
+    background: rgba(255,255,255,0.55);
+    padding: 6px;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+/* التاب */
 [data-testid="stTab"] {
-    padding: 10px 22px;
-    margin-right: 8px;
-    border-radius: 8px;
-    background-color: #f1f3f4;
-    color: #333333;
+    padding: 10px 26px;
+    border-radius: 10px;
+    margin-right: 6px;
     font-weight: 600;
-    border: 1px solid #dadce0;
+    font-size: 14px;
+    color: #3c4043;
+    background: transparent;
+    border: none;
+    transition: all 0.25s ease;
+}
+
+/* Hover */
+[data-testid="stTab"]:hover {
+    background-color: rgba(66,133,244,0.08);
 }
 
 /* التاب النشط */
 [data-testid="stTab"][aria-selected="true"] {
-    background-color: #ffffff;
-    color: #000000;
-    border: 1px solid #000000;
+    background: linear-gradient(
+        135deg,
+        #4f8cff,
+        #3b6df2
+    );
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(59,109,242,0.35);
 }
 
-/* إزالة أي خط أو تأثير إضافي */
+/* إزالة أي underline */
 [data-testid="stTab"]::after {
     display: none !important;
 }
+
 
 </style>
 """, unsafe_allow_html=True)
@@ -149,6 +171,7 @@ with tab1:
 
 with tab2:
     load_and_display("Results2.xlsx")
+
 
 
 
