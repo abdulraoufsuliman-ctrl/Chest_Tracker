@@ -106,6 +106,7 @@ def highlight_cells(val):
 styled_df = (
     df.style
     # فصل الآلاف
+    .hide(axis="index")
     .format("{:,}", subset=num_cols)
 
     # تلوين الأعمدة الرقمية (تجاوز عمود الاسم)
@@ -124,6 +125,7 @@ st.dataframe(
     use_container_width=True,
     height=700
 )
+
 
 
 
