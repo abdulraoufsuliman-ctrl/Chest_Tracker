@@ -49,6 +49,36 @@ st.markdown("""
     border: 1px solid #dadce0;
     border-radius: 0;
 }
+/* ================== تحسين Tabs ================== */
+
+/* إزالة الخط السفلي الافتراضي */
+[data-testid="stTabs"] > div > div {
+    border-bottom: none !important;
+}
+
+/* شكل التابات */
+[data-testid="stTab"] {
+    padding: 10px 22px;
+    margin-right: 8px;
+    border-radius: 8px;
+    background-color: #f1f3f4;
+    color: #333333;
+    font-weight: 600;
+    border: 1px solid #dadce0;
+}
+
+/* التاب النشط */
+[data-testid="stTab"][aria-selected="true"] {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #000000;
+}
+
+/* إزالة أي خط أو تأثير إضافي */
+[data-testid="stTab"]::after {
+    display: none !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -119,5 +149,6 @@ with tab1:
 
 with tab2:
     load_and_display("Results2.xlsx")
+
 
 
