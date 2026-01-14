@@ -21,33 +21,26 @@ st.markdown("""
 .header {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-bottom: 10px;
+    gap: 16px;
+    margin-bottom: 12px;
+    padding-top: 10px;   /* ✅ هذا هو المفتاح */
 }
 
-/* Logo */
 .logo {
     width: 80px;
     height: auto;
     display: block;
 }
 
-/* Title */
 .title {
     font-size: 42px;
     font-weight: 800;
     letter-spacing: 2px;
     color: #000000;
-    line-height: 1;
+    line-height: 1.2;    /* ✅ لا تجعلها 1 */
+    padding-top: 4px;   /* ✅ أمان إضافي */
 }
 
-/* جدول بحواف حادة */
-.stDataFrame {
-    border: 1px solid #000000;
-    border-radius: 0px;
-    overflow: hidden;
-    box-shadow: none;
-}
 </style>
 """, unsafe_allow_html=True)
 
@@ -82,3 +75,4 @@ try:
 
 except Exception as e:
     st.error(f"Error: {e}")
+
