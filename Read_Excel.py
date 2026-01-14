@@ -57,20 +57,36 @@ st.markdown("""
     font-weight: 600;
     text-align: center;
 }
-.stDataFrame tbody td:nth-child(3),
-.stDataFrame thead th:nth-child(3) {
+.stDataFrame tbody td:nth-child(1),
+.stDataFrame thead th:nth-child(1) {
     position: sticky;
-    left: 48px;
-    z-index: 8;
+    left: 0;
+    z-index: 12;
+    background-color: #f1f3f4;
+    text-align: center;
+    border-right: 1px solid #c4c7cc;
+}
+
+/* ===== تثبيت عمود Name (العمود الثاني) ===== */
+.stDataFrame tbody td:nth-child(2),
+.stDataFrame thead th:nth-child(2) {
+    position: sticky;
+    left: 48px;              /* عرض عمود الترقيم */
+    z-index: 11;
     background-color: #f1f3f4;
     font-weight: 600;
     text-align: left;
     border-right: 1px solid #c4c7cc;
 }
 
-/* ===== تمييز تقاطع (Name + Header) ===== */
-.stDataFrame thead th:first-child {
-    z-index: 11;
+/* ===== تقاطع Header + Index ===== */
+.stDataFrame thead th:nth-child(1) {
+    z-index: 14;
+}
+
+/* ===== تقاطع Header + Name ===== */
+.stDataFrame thead th:nth-child(2) {
+    z-index: 13;
     background-color: #d2d6db;
 }
 </style>
@@ -139,6 +155,7 @@ st.dataframe(
     use_container_width=True,
     height=700
 )
+
 
 
 
