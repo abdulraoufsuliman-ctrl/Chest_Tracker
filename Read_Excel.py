@@ -123,6 +123,7 @@ styled_df = (
 st.dataframe(
     styled_df,
     use_container_width=True,
-    height=700,
+    height=600,
     hide_index=True  # ✅ تم إضافة هذا السطر لحذف عمود الترقيم التلقائي
 )
+
