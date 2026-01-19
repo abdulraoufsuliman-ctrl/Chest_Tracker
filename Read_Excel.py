@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-
+from datetime import datetime, timedelta
+import os
 # ================== إعداد الصفحة ==================
 st.set_page_config(
     page_title="Player Results",
@@ -88,6 +89,21 @@ st.markdown("""
 [data-testid="stTab"] div[data-baseweb="tab-highlight"] {
     display: none !important;
 }
+/* صف التابات + التاريخ */
+.tabs-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: -6px;   /* دمج مع الجدول */
+}
+
+/* التاريخ */
+.tabs-date {
+    font-size: 12px;
+    color: #5f6368;
+    white-space: nowrap;
+}
+
 
 /* ================== تنسيق الجدول (حواف حادة) ================== */
 .stDataFrame {
@@ -112,6 +128,12 @@ st.markdown(f"""
     <div class="title">[RUM] BOTTLES AND BATTLE</div>
 </div>
 """, unsafe_allow_html=True)
+
+#=============================================
+def get_file_modified_time(file_name):
+    ts = os.path.getmtime(file_name)
+    dt = datetime.fromtimestamp(ts) + timedelta(hours=2)
+    return dt.strftime("%Y-%m-%d %H:%M (UTC+2)")
 
 # ================== دالة تلوين الخلايا ==================
 def highlight_cells(val):
@@ -171,9 +193,18 @@ def load_and_display(file_name):
 tab1, tab2 = st.tabs(["Period 1", "Period 2"])
 
 with tab1:
+    st.markdown(
+        f"<div class='tabs-date'>Last update: {get_file_modified_time('Results1.xlsx')}</div>",
+        unsafe_allow_html=True
+    )
     load_and_display("Results1.xlsx")
 
 with tab2:
+    st.markdown(
+        f"<div class='tabs-date'>Last update: {get_file_modified_time('Results2.xlsx')}</div>",
+        unsafe_allow_html=True
+    )
     load_and_display("Results2.xlsx")
+
 
 
