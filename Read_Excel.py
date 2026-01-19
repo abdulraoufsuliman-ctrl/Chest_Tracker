@@ -196,7 +196,7 @@ def load_and_display(file_name):
         df[num_cols] = df[num_cols].fillna(0)
 
         # تنسيق الستايل
-       styled_df = (
+        styled_df = (
             df.style
             .format("{:,}", subset=num_cols)
         
@@ -239,6 +239,7 @@ with tab2:
         unsafe_allow_html=True
     )
     load_and_display("Results2.xlsx")
+
 
 
 
