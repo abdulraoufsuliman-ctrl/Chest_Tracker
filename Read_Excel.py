@@ -154,7 +154,7 @@ def highlight_cells(val):
             )
     return "text-align: center;"
 
-    def highlight_points(val):
+def highlight_points(val):
     if not isinstance(val, (int, float)):
         return "text-align: center;"
 
@@ -239,6 +239,7 @@ with tab2:
         unsafe_allow_html=True
     )
     load_and_display("Results2.xlsx")
+
 
 
 
