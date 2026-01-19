@@ -197,7 +197,7 @@ def load_and_display(file_name):
         df = pd.read_excel(file_name, sheet_name="Results")
         
         # تنظيف البيانات
-        df = df.dropna(how="all", axis=0).dropna(how="all", axis=1)
+        #df = df.dropna(how="all", axis=0).dropna(how="all", axis=1)
 
         # تحويل الأعمدة الرقمية وتنسيقها
         num_cols = df.select_dtypes(include="number").columns
@@ -247,6 +247,7 @@ with tab2:
         unsafe_allow_html=True
     )
     load_and_display("Results2.xlsx")
+
 
 
 
