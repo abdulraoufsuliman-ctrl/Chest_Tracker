@@ -154,6 +154,33 @@ def highlight_cells(val):
             )
     return "text-align: center;"
 
+    def highlight_points(val):
+    if not isinstance(val, (int, float)):
+        return "text-align: center;"
+
+    if val == 0:
+        return (
+            "background-color: #fce8e6;"
+            "color: #1e7f43;"
+            "font-weight: 700;"
+            "text-align: center;"
+        )
+    elif 0 < val < 2500:
+        return (
+            "background-color: #fff4ce;"
+            "color: #7a5c00;"
+            "font-weight: 700;"
+            "text-align: center;"
+        )
+    else:  # >= 2500
+        return (
+            "background-color: #e6f4ea;"
+            "color: #1e7f43;"
+            "font-weight: 700;"
+            "text-align: center;"
+        )
+
+
 
 # ================== دالة تحميل وعرض البيانات ==================
 def load_and_display(file_name):
@@ -169,15 +196,22 @@ def load_and_display(file_name):
         df[num_cols] = df[num_cols].fillna(0)
 
         # تنسيق الستايل
-        styled_df = (
+       styled_df = (
             df.style
             .format("{:,}", subset=num_cols)
-            .applymap(highlight_cells, subset=num_cols) # تطبيق التلوين على كل الأرقام
+        
+            # تلوين عمود Points بشروط خاصة
+            .applymap(highlight_points, subset=["Points"])
+        
+            # تلوين بقية الأعمدة الرقمية
+            .applymap(highlight_cells, subset=df.columns[2:])
+        
             .set_properties(**{
                 "border": "1px solid #e0e0e0",
                 "font-size": "14px"
             })
         )
+
 
         st.dataframe(
             styled_df,
@@ -205,6 +239,7 @@ with tab2:
         unsafe_allow_html=True
     )
     load_and_display("Results2.xlsx")
+
 
 
 
