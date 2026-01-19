@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 import os
-import pandas as pd
+
 # ================== إعداد الصفحة ==================
 st.set_page_config(
     page_title="Player Results",
@@ -158,11 +158,6 @@ def highlight_cells(val):
 
 
 def highlight_points(val):
-    # إذا كانت الخلية فارغة (NaN)
-    if pd.isna(val):
-        return "text-align: center;"
-
-    # تأكيد أن القيمة رقم
     if not isinstance(val, (int, float)):
         return "text-align: center;"
 
@@ -187,6 +182,7 @@ def highlight_points(val):
             "font-weight: 700;"
             "text-align: center;"
         )
+
 
 
 
@@ -247,6 +243,7 @@ with tab2:
         unsafe_allow_html=True
     )
     load_and_display("Results2.xlsx")
+
 
 
 
