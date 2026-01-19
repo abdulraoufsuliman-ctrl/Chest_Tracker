@@ -163,8 +163,8 @@ def highlight_points(val):
 
     if val == 0:
         return (
-            "background-color: #e6f4ea;"
-            "color: #1e7f43;"
+            "background-color: #fce8e6;"
+            "color: #c5221f;"
             "font-weight: 700;"
             "text-align: center;"
         )
@@ -243,6 +243,7 @@ with tab2:
         unsafe_allow_html=True
     )
     load_and_display("Results2.xlsx")
+
 
 
 
