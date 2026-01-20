@@ -86,16 +86,16 @@ st.markdown("""
     border-color: #3b6df2 !important;
 }
 
-/* إزالة الخط الملون المتحرك تحت التاب */
-[data-testid="stTab"] div[data-baseweb="tab-highlight"] {
-    display: none !important;
-}
+#/* إزالة الخط الملون المتحرك تحت التاب */
+#[data-testid="stTab"] div[data-baseweb="tab-highlight"] {
+#    display: none !important;
+#}
 /* صف التابات + التاريخ */
 .tabs-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 6px;   /* دمج مع الجدول */
+    margin-bottom: 0;   /* دمج مع الجدول */
 }
 
 /* التاريخ */
@@ -254,6 +254,7 @@ with tab3:
             unsafe_allow_html=True
         )
     load_and_display("Results_Castle.xlsx")
+
 
 
 
