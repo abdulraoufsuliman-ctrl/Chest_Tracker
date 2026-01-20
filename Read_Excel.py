@@ -232,25 +232,29 @@ tab1, tab2, tab3 = st.tabs(["Period 1", "Period 2", "Castle Competition"])
 
 
 with tab1:
-    st.markdown(
-        f"<div class='tabs-date'>Last update: {get_file_modified_time('Results1.xlsx')}</div>",
-        unsafe_allow_html=True
-    )
+    with st.container():
+        st.markdown(
+            f"<div class='tabs-date'>Last update: {get_file_modified_time('Results1.xlsx')}</div>",
+            unsafe_allow_html=True
+        )
     load_and_display("Results1.xlsx")
 
 with tab2:
-    st.markdown(
-        f"<div class='tabs-date'>Last update: {get_file_modified_time('Results2.xlsx')}</div>",
-        unsafe_allow_html=True
-    )
+    with st.container():
+        st.markdown(
+            f"<div class='tabs-date'>Last update: {get_file_modified_time('Results2.xlsx')}</div>",
+            unsafe_allow_html=True
+        )
     load_and_display("Results2.xlsx")
 
 with tab3:
-    st.markdown(
-        f"<div class='tabs-date'>Last update: {get_file_modified_time('Results_Castle.xlsx')}</div>",
-        unsafe_allow_html=True
-    )
+    with st.container():
+        st.markdown(
+            f"<div class='tabs-date'>Last update: {get_file_modified_time('Results_Castle.xlsx')}</div>",
+            unsafe_allow_html=True
+        )
     load_and_display("Results_Castle.xlsx")
+
 
 
 
