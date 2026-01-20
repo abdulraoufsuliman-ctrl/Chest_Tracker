@@ -95,7 +95,7 @@ st.markdown("""
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: -6px;   /* دمج مع الجدول */
+    margin-bottom: 6px;   /* دمج مع الجدول */
 }
 
 /* التاريخ */
@@ -254,6 +254,7 @@ with tab3:
             unsafe_allow_html=True
         )
     load_and_display("Results_Castle.xlsx")
+
 
 
 
