@@ -228,7 +228,8 @@ def load_and_display(file_name):
 
 # ================== Tabs (الفترات) ==================
 # تأكدنا هنا أن أسماء الفترات مكتوبة بوضوح
-tab1, tab2 = st.tabs(["Period 1", "Period 2"])
+tab1, tab2, tab3 = st.tabs(["Period 1", "Period 2", "Castle Competition"])
+
 
 with tab1:
     st.markdown(
@@ -243,6 +244,13 @@ with tab2:
         unsafe_allow_html=True
     )
     load_and_display("Results2.xlsx")
+
+with tab3:
+    st.markdown(
+        f"<div class='tabs-date'>Last update: {get_file_modified_time('Results_Castle.xlsx')}</div>",
+        unsafe_allow_html=True
+    )
+    load_and_display("Results_Castle.xlsx")
 
 
 
