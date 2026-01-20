@@ -86,25 +86,22 @@ st.markdown("""
     border-color: #3b6df2 !important;
 }
 
-#/* إزالة الخط الملون المتحرك تحت التاب */
-#[data-testid="stTab"] div[data-baseweb="tab-highlight"] {
-#    display: none !important;
-#}
+
 /* صف التابات + التاريخ */
-.tabs-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0;   /* دمج مع الجدول */
-}
+#.tabs-row {
+ #   display: flex;
+ #   align-items: center;
+ #   justify-content: space-between;
+  #  margin-bottom: 0;   /* دمج مع الجدول */
+#}
 
 /* التاريخ */
-.tabs-date {
+.tab-date {
     font-size: 12px;
     color: #5f6368;
-    white-space: nowrap;
+    margin-bottom: 10px;
+    text-align: right;
 }
-
 
 /* ================== تنسيق الجدول (حواف حادة) ================== */
 .stDataFrame {
@@ -230,30 +227,30 @@ def load_and_display(file_name):
 # تأكدنا هنا أن أسماء الفترات مكتوبة بوضوح
 tab1, tab2, tab3 = st.tabs(["Period 1", "Period 2", "Castle Competition"])
 
-
 with tab1:
-    with st.container():
-        st.markdown(
-            f"<div class='tabs-date'>Last update: {get_file_modified_time('Results1.xlsx')}</div>",
-            unsafe_allow_html=True
-        )
+    # إضافة التاريخ هنا داخل التاب الأول
+    st.markdown(
+        f"<div class='tab-date'>Last update: {get_file_modified_time('Results1.xlsx')}</div>", 
+        unsafe_allow_html=True
+    )
     load_and_display("Results1.xlsx")
 
 with tab2:
-    with st.container():
-        st.markdown(
-            f"<div class='tabs-date'>Last update: {get_file_modified_time('Results2.xlsx')}</div>",
-            unsafe_allow_html=True
-        )
+    # إضافة التاريخ هنا داخل التاب الثاني
+    st.markdown(
+        f"<div class='tab-date'>Last update: {get_file_modified_time('Results2.xlsx')}</div>", 
+        unsafe_allow_html=True
+    )
     load_and_display("Results2.xlsx")
 
 with tab3:
-    with st.container():
-        st.markdown(
-            f"<div class='tabs-date'>Last update: {get_file_modified_time('Results_Castle.xlsx')}</div>",
-            unsafe_allow_html=True
-        )
+    # إضافة التاريخ هنا داخل التاب الثالث
+    st.markdown(
+        f"<div class='tab-date'>Last update: {get_file_modified_time('Results_Castle.xlsx')}</div>", 
+        unsafe_allow_html=True
+    )
     load_and_display("Results_Castle.xlsx")
+
 
 
 
