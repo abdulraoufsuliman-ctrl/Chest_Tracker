@@ -88,21 +88,19 @@ st.markdown("""
 
 
 /* صف التابات + التاريخ */
-#.tabs-row {
- #   display: flex;
- #   align-items: center;
- #   justify-content: space-between;
-  #  margin-bottom: 0;   /* دمج مع الجدول */
-#}
-
-/* التاريخ */
-.tab-date {
-    font-size: 12px;
-    color: #5f6368;
-    margin-bottom: 10px;
-    text-align: right;
+.tabs-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0;   /* دمج مع الجدول */
 }
 
+/* التاريخ */
+.tabs-date {
+    font-size: 12px;
+    color: #5f6368;
+    white-space: nowrap;
+}
 /* ================== تنسيق الجدول (حواف حادة) ================== */
 .stDataFrame {
     margin-top: -1px !important; /* سحب الجدول للأعلى ليلتصق بالتابات */
@@ -228,28 +226,27 @@ def load_and_display(file_name):
 tab1, tab2, tab3 = st.tabs(["Period 1", "Period 2", "Castle Competition"])
 
 with tab1:
-    # إضافة التاريخ هنا داخل التاب الأول
     st.markdown(
-        f"<div class='tab-date'>Last update: {get_file_modified_time('Results1.xlsx')}</div>", 
+        f"<div class='tabs-date'>Last update: {get_file_modified_time('Results1.xlsx')}</div>",
         unsafe_allow_html=True
     )
     load_and_display("Results1.xlsx")
 
 with tab2:
-    # إضافة التاريخ هنا داخل التاب الثاني
     st.markdown(
-        f"<div class='tab-date'>Last update: {get_file_modified_time('Results2.xlsx')}</div>", 
+        f"<div class='tabs-date'>Last update: {get_file_modified_time('Results2.xlsx')}</div>",
         unsafe_allow_html=True
     )
     load_and_display("Results2.xlsx")
 
 with tab3:
-    # إضافة التاريخ هنا داخل التاب الثالث
     st.markdown(
-        f"<div class='tab-date'>Last update: {get_file_modified_time('Results_Castle.xlsx')}</div>", 
+        f"<div class='tabs-date'>Last update: {get_file_modified_time('Results_Castle.xlsx')}</div>",
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx")
+
+
 
 
 
