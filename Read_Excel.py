@@ -42,37 +42,16 @@ st.markdown("""
     color: #000000;
     line-height: 2.9;
     padding-top: 4px;
-
 }
 
 /* ================== إزالة الخط السفلي للتابات وجعلها ملتصقة ================== */
 
-#/* إزالة الخط الممتد تحت التابات */
-#[data-testid="stTabs"] {
-#    border-bottom: none !important;
-#}
-
-/* إزالة المسافة الفاصلة بين التابات والمحتوى (الجدول) */
-#[data-testid="stTabContent"] {
- #   padding-top: 0px !important;
-#}
-
-/* إزالة الخط السفلي الافتراضي من Streamlit */
-[data-testid="stTabs"] [data-baseweb="tab-border"] {
-    display: none !important;
-}
-
-/* تنسيق حاوية التابات */
-[data-testid="stTabs"] [role="tablist"] {
-    gap: 5px; 
-}
-
 /* تصميم التاب الفردي */
 [data-testid="stTab"] {
     height: 45px;
-    background-color: #f0f2f6; /* لون خلفية خفيف للتابات غير النشطة */
-    color: #31333F !important; /* إظهار النص بوضوح */
-    border-radius: 8px 8px 0 0 !important; /* حواف علوية دائرية قليلاً */
+    background-color: #f0f2f6;
+    color: #31333F !important;
+    border-radius: 8px 8px 0 0 !important;
     border: 1px solid #ddd !important;
     border-bottom: none !important;
     padding: 0 30px !important;
@@ -86,32 +65,24 @@ st.markdown("""
     border-color: #3b6df2 !important;
 }
 
-
-/* صف التابات + التاريخ */
-.tabs-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0;   /* دمج مع الجدول */
-}
-
-/* التاريخ */
-.tabs-date {
+/* التاريخ داخل كل تاب */
+.tab-date {
     font-size: 12px;
     color: #5f6368;
-    white-space: nowrap;
+    margin-bottom: 10px;
+    text-align: right;
 }
+
 /* ================== تنسيق الجدول (حواف حادة) ================== */
 .stDataFrame {
-    margin-top: -1px !important; /* سحب الجدول للأعلى ليلتصق بالتابات */
+    margin-top: 0px !important;
 }
 
 /* حواف حادة للجدول */
 [data-testid="stTable"] , [data-testid="stDataFrame"] {
     border: 1px solid #ddd !important;
-    border-radius: 0px !important; 
+    border-radius: 0px !important;
 }
-
 </style>
 """, unsafe_allow_html=True)
 
@@ -125,11 +96,25 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-#=============================================
-def get_file_modified_time(file_name):
-    ts = os.path.getmtime(file_name)
-    dt = datetime.fromtimestamp(ts) + timedelta(hours=2)
-    return dt.strftime("%Y-%m-%d %H:%M (UTC+2)")
+# ================== دالة الحصول على وقت تعديل ملف Excel ==================
+def get_excel_modified_time(file_name):
+    """
+    تقوم هذه الدالة بإرجاع تاريخ ووقت آخر تعديل لملف Excel
+    """
+    try:
+        if os.path.exists(file_name):
+            # الحصول على وقت تعديل الملف
+            ts = os.path.getmtime(file_name)
+            # تحويله إلى تاريخ ووقت
+            dt = datetime.fromtimestamp(ts)
+            # إضافة ساعتين لتوقيت UTC+2
+            dt_utc2 = dt + timedelta(hours=2)
+            # تنسيق التاريخ بالشكل المطلوب
+            return dt_utc2.strftime("%Y-%m-%d %H:%M (UTC+2)")
+        else:
+            return "File not found"
+    except Exception as e:
+        return f"Error: {str(e)}"
 
 # ================== دالة تلوين الخلايا ==================
 def highlight_cells(val):
@@ -149,8 +134,6 @@ def highlight_cells(val):
                 "text-align: center;"
             )
     return "text-align: center;"
-
-
 
 def highlight_points(val):
     if not isinstance(val, (int, float)):
@@ -178,18 +161,12 @@ def highlight_points(val):
             "text-align: center;"
         )
 
-
-
-
 # ================== دالة تحميل وعرض البيانات ==================
 def load_and_display(file_name):
     try:
         # قراءة البيانات
         df = pd.read_excel(file_name, sheet_name="Results")
         
-        # تنظيف البيانات
-        #df = df.dropna(how="all", axis=0).dropna(how="all", axis=1)
-
         # تحويل الأعمدة الرقمية وتنسيقها
         num_cols = df.select_dtypes(include="number").columns
         df[num_cols] = df[num_cols].fillna(0)
@@ -198,19 +175,13 @@ def load_and_display(file_name):
         styled_df = (
             df.style
             .format("{:,}", subset=num_cols)
-        
-            # تلوين عمود Points بشروط خاصة
             .applymap(highlight_points, subset=["Points"])
-        
-            # تلوين بقية الأعمدة الرقمية
             .applymap(highlight_cells, subset=df.columns[2:])
-        
             .set_properties(**{
                 "border": "1px solid #e0e0e0",
                 "font-size": "14px"
             })
         )
-
 
         st.dataframe(
             styled_df,
@@ -222,47 +193,31 @@ def load_and_display(file_name):
         st.error(f"Error loading {file_name}: {e}")
 
 # ================== Tabs (الفترات) ==================
-# تأكدنا هنا أن أسماء الفترات مكتوبة بوضوح
 tab1, tab2, tab3 = st.tabs(["Period 1", "Period 2", "Castle Competition"])
 
 with tab1:
+    # الحصول على تاريخ تعديل ملف Excel الأول
+    last_update_1 = get_excel_modified_time("Results1.xlsx")
     st.markdown(
-        f"<div class='tabs-date'>Last update: {get_file_modified_time('Results1.xlsx')}</div>",
+        f"<div class='tab-date'>Last update: {last_update_1}</div>", 
         unsafe_allow_html=True
     )
     load_and_display("Results1.xlsx")
 
 with tab2:
+    # الحصول على تاريخ تعديل ملف Excel الثاني
+    last_update_2 = get_excel_modified_time("Results2.xlsx")
     st.markdown(
-        f"<div class='tabs-date'>Last update: {get_file_modified_time('Results2.xlsx')}</div>",
+        f"<div class='tab-date'>Last update: {last_update_2}</div>", 
         unsafe_allow_html=True
     )
     load_and_display("Results2.xlsx")
 
 with tab3:
+    # الحصول على تاريخ تعديل ملف Excel الثالث
+    last_update_3 = get_excel_modified_time("Results_Castle.xlsx")
     st.markdown(
-        f"<div class='tabs-date'>Last update: {get_file_modified_time('Results_Castle.xlsx')}</div>",
+        f"<div class='tab-date'>Last update: {last_update_3}</div>", 
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
