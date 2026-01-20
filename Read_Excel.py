@@ -53,14 +53,14 @@ st.markdown("""
 #}
 
 /* إزالة المسافة الفاصلة بين التابات والمحتوى (الجدول) */
-[data-testid="stTabContent"] {
-    padding-top: 0px !important;
-}
+#[data-testid="stTabContent"] {
+ #   padding-top: 0px !important;
+#}
 
 /* إزالة الخط السفلي الافتراضي من Streamlit */
-#[data-testid="stTabs"] [data-baseweb="tab-border"] {
-#    display: none !important;
-#}
+[data-testid="stTabs"] [data-baseweb="tab-border"] {
+    display: none !important;
+}
 
 /* تنسيق حاوية التابات */
 [data-testid="stTabs"] [role="tablist"] {
@@ -254,6 +254,7 @@ with tab3:
             unsafe_allow_html=True
         )
     load_and_display("Results_Castle.xlsx")
+
 
 
 
