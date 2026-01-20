@@ -48,9 +48,9 @@ st.markdown("""
 /* ================== إزالة الخط السفلي للتابات وجعلها ملتصقة ================== */
 
 #/* إزالة الخط الممتد تحت التابات */
-#[data-testid="stTabs"] {
-#    border-bottom: none !important;
-#}
+[data-testid="stTabs"] {
+    border-bottom: none !important;
+}
 
 /* إزالة المسافة الفاصلة بين التابات والمحتوى (الجدول) */
 #[data-testid="stTabContent"] {
@@ -254,6 +254,7 @@ with tab3:
             unsafe_allow_html=True
         )
     load_and_display("Results_Castle.xlsx")
+
 
 
 
