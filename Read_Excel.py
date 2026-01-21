@@ -42,81 +42,60 @@ st.markdown("""
     color: #000000;
     line-height: 2.9;
     padding-top: 4px;
+
 }
 
 /* ================== إزالة الخط السفلي للتابات وجعلها ملتصقة ================== */
+
+/* إزالة الخط السفلي الافتراضي من Streamlit */
 [data-testid="stTabs"] [data-baseweb="tab-border"] {
     display: none !important;
 }
 
+/* تنسيق حاوية التابات */
 [data-testid="stTabs"] [role="tablist"] {
     gap: 5px; 
 }
 
-/* التاب الفردي - اللون الافتراضي */
+/* تصميم التاب الفردي */
 [data-testid="stTab"] {
     height: 45px;
-    background-color: #f0f2f6;
-    color: #31333F !important;
-    border-radius: 8px 8px 0 0 !important;
+    background-color: #f0f2f6; /* لون خلفية خفيف للتابات غير النشطة */
+    color: #31333F !important; /* إظهار النص بوضوح */
+    border-radius: 8px 8px 0 0 !important; /* حواف علوية دائرية قليلاً */
     border: 1px solid #ddd !important;
     border-bottom: none !important;
     padding: 0 30px !important;
     font-weight: 600;
-    transition: all 0.3s ease;
 }
 
-/* التاب النشط - اللون الافتراضي */
+/* التاب النشط */
 [data-testid="stTab"][aria-selected="true"] {
     background: linear-gradient(135deg, #4f8cff, #3b6df2) !important;
     color: white !important;
     border-color: #3b6df2 !important;
 }
 
-/* التاب الذي يحتوي على بيانات (أرقام موجبة) */
-.tab-with-data {
-    background: linear-gradient(135deg, #34a853, #2e7d32) !important;
-    color: white !important;
-    border-color: #2e7d32 !important;
-}
 
-/* التاب الذي يحتوي على أصفار فقط */
-.tab-with-zeros {
-    background: linear-gradient(135deg, #ea4335, #c5221f) !important;
-    color: white !important;
-    border-color: #c5221f !important;
-}
-
-/* التاب النشط الذي يحتوي على بيانات */
-.tab-with-data[aria-selected="true"] {
-    background: linear-gradient(135deg, #2e7d32, #1b5e20) !important;
-    color: white !important;
-    border-color: #1b5e20 !important;
-}
-
-/* التاب النشط الذي يحتوي على أصفار فقط */
-.tab-with-zeros[aria-selected="true"] {
-    background: linear-gradient(135deg, #c5221f, #a50e0e) !important;
-    color: white !important;
-    border-color: #a50e0e !important;
-}
-
+/* التاريخ */
 .tabs-date {
     font-size: 12px;
     color: #5f6368;
     white-space: nowrap;
     margin-bottom: 10px;
-    text-align: left;
+    text-align: Left;
 }
-
+/* ================== تنسيق الجدول (حواف حادة) ================== */
 .stDataFrame {
-    margin-top: -1px !important;
+    margin-top: -1px !important; /* سحب الجدول للأعلى ليلتصق بالتابات */
 }
 
+/* حواف حادة للجدول */
 [data-testid="stTable"] , [data-testid="stDataFrame"] {
     border: 1px solid #ddd !important;
     border-radius: 0px !important; 
 }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -130,17 +109,11 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# ================== دالة الحصول على وقت تعديل الملف ==================
+#=============================================
 def get_file_modified_time(file_name):
-    try:
-        if os.path.exists(file_name):
-            ts = os.path.getmtime(file_name)
-            dt = datetime.fromtimestamp(ts) + timedelta(hours=2)
-            return dt.strftime("%Y-%m-%d %H:%M (UTC+2)")
-        else:
-            return "File not found"
-    except Exception as e:
-        return f"Error: {str(e)}"
+    ts = os.path.getmtime(file_name)
+    dt = datetime.fromtimestamp(ts) + timedelta(hours=2)
+    return dt.strftime("%Y-%m-%d %H:%M (UTC+2)")
 
 # ================== دالة تلوين الخلايا ==================
 def highlight_cells(val):
@@ -213,44 +186,16 @@ def highlight_points_castle(val):
             "text-align: center;"
         )
 
-# ================== دالة لفحص إذا كان الجدول يحتوي على أرقام موجبة ==================
-def has_positive_data(df):
-    """تحقق إذا كان الجدول يحتوي على أرقام موجبة في الأعمدة الرقمية"""
-    try:
-        # اختيار الأعمدة الرقمية فقط
-        num_cols = df.select_dtypes(include="number").columns
-        
-        if len(num_cols) == 0:
-            return False  # لا توجد أعمدة رقمية
-            
-        # جمع كل القيم في الأعمدة الرقمية
-        total_positive = 0
-        for col in num_cols:
-            total_positive += (df[col] > 0).sum()
-            
-        return total_positive > 0
-    except:
-        return False
 
 # ================== دالة تحميل وعرض البيانات ==================
 def load_and_display(file_name, is_castle=False):
-    has_data = False  # لتحديد لون التاب
-    
     try:
-        # التحقق من وجود الملف أولاً
-        if not os.path.exists(file_name):
-            st.error(f"File '{file_name}' not found!")
-            return False
-            
         # قراءة البيانات
         df = pd.read_excel(file_name, sheet_name="Results")
         
         # تحويل الأعمدة الرقمية وتنسيقها
         num_cols = df.select_dtypes(include="number").columns
         df[num_cols] = df[num_cols].fillna(0)
-        
-        # التحقق إذا كان الجدول يحتوي على أرقام موجبة
-        has_data = has_positive_data(df)
 
         # اختيار دالة التلوين المناسبة للنقاط
         if is_castle:
@@ -262,8 +207,13 @@ def load_and_display(file_name, is_castle=False):
         styled_df = (
             df.style
             .format("{:,}", subset=num_cols)
+        
+            # تلوين عمود Points بشروط خاصة
             .applymap(points_highlight_func, subset=["Points"])
+        
+            # تلوين بقية الأعمدة الرقمية
             .applymap(highlight_cells, subset=df.columns[2:])
+        
             .set_properties(**{
                 "border": "1px solid #e0e0e0",
                 "font-size": "14px"
@@ -276,80 +226,38 @@ def load_and_display(file_name, is_castle=False):
             height=600,
             hide_index=True
         )
-        
-        return has_data
-        
     except Exception as e:
         st.error(f"Error loading {file_name}: {e}")
-        return False
 
-# ================== Tabs (الفترات) مع ألوان متغيرة ==================
-# قائمة لتخزين معلومات كل تاب
-tabs_info = []
+# ================== Tabs (الفترات) ==================
+# تأكدنا هنا أن أسماء الفترات مكتوبة بوضوح
+tab1, tab2, tab3, tab4 = st.tabs(["Period 1", "Period 2",  "Period 3", "Castle Competition"])
 
-# إنشاء التابات
-tab1, tab2, tab3, tab4 = st.tabs(["Period 1", "Period 2", "Period 3", "Castle Competition"])
-
-# عرض محتوى كل تاب وتخزين معلوماتها
 with tab1:
     st.markdown(
         f"<div class='tabs-date'>Last update: {get_file_modified_time('Results1.xlsx')}</div>",
         unsafe_allow_html=True
     )
-    has_data_1 = load_and_display("Results1.xlsx", is_castle=False)
-    tabs_info.append(("tab1", has_data_1))
+    load_and_display("Results1.xlsx", is_castle=False)
 
 with tab2:
     st.markdown(
         f"<div class='tabs-date'>Last update: {get_file_modified_time('Results2.xlsx')}</div>",
         unsafe_allow_html=True
     )
-    has_data_2 = load_and_display("Results2.xlsx", is_castle=False)
-    tabs_info.append(("tab2", has_data_2))
+    load_and_display("Results2.xlsx", is_castle=False)
 
 with tab3:
     st.markdown(
         f"<div class='tabs-date'>Last update: {get_file_modified_time('Results3.xlsx')}</div>",
         unsafe_allow_html=True
     )
-    has_data_3 = load_and_display("Results3.xlsx", is_castle=False)
-    tabs_info.append(("tab3", has_data_3))
+    load_and_display("Results3.xlsx", is_castle=False)
+
 
 with tab4:
     st.markdown(
         f"<div class='tabs-date'>Last update: {get_file_modified_time('Results_Castle.xlsx')}</div>",
         unsafe_allow_html=True
     )
-    has_data_4 = load_and_display("Results_Castle.xlsx", is_castle=True)
-    tabs_info.append(("tab4", has_data_4))
-
-# ================== إضافة JavaScript لتغيير ألوان التابات ==================
-js_code = """
-<script>
-// الانتظار حتى يتم تحميل الصفحة
-setTimeout(function() {
-    // الحصول على جميع عناصر التاب
-    const tabs = document.querySelectorAll('[data-testid="stTab"]');
-    
-    // تعريف فئات CSS لألوان التابات
-    const tabData = %s;
-    
-    // تطبيق الألوان على كل تاب
-    tabs.forEach((tab, index) => {
-        if (index < tabData.length) {
-            const hasData = tabData[index][1];
-            if (hasData === true) {
-                // إذا كان هناك بيانات إيجابية
-                tab.classList.add('tab-with-data');
-            } else if (hasData === false) {
-                // إذا كان هناك أصفار فقط
-                tab.classList.add('tab-with-zeros');
-            }
-        }
-    });
-}, 1000); // تأخير 1 ثانية لضمان تحميل كل شيء
-</script>
-""" % str(tabs_info)
-
-# إضافة JavaScript لتطبيق الألوان
-st.components.v1.html(js_code, height=0)
+    load_and_display("Results_Castle.xlsx", is_castle=True)
