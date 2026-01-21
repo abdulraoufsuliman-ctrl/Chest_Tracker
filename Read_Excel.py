@@ -215,7 +215,7 @@ def load_and_display(file_name):
         if is_castle:
             points_highlight_func = highlight_points_castle
         else:
-            points_highlight_func = def highlight_points
+            points_highlight_func =  highlight_points
 
        
         # تنسيق الستايل
@@ -269,6 +269,7 @@ with tab3:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx")
+
 
 
 
