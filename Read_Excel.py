@@ -196,7 +196,7 @@ def highlight_points_castle(val):
                 "color: #c5221f;"
                 "font-weight: 600;"
                 "text-align: center;"
-                 return "text-align: center
+                 return "text-align: center;"
              )
 
 
@@ -270,6 +270,7 @@ with tab3:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx")
+
 
 
 
