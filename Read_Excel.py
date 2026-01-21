@@ -134,6 +134,7 @@ def get_file_modified_time(file_name):
 # ================== دالة تلوين الخلايا ==================
 def highlight_cells(val):
     if isinstance(val, (int, float)):
+    
         if val > 0:
             return (
                 "background-color: #e6f4ea;"
@@ -179,7 +180,9 @@ def highlight_points(val):
         )
         
 def highlight_points_castle(val):
-    if isinstance(val, (int, float)):
+    if not isinstance(val, (int, float)):
+        return "text-align: center;"
+
         if val > 0:
             return (
                 "background-color: #e6f4ea;"
@@ -268,6 +271,7 @@ with tab3:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx")
+
 
 
 
