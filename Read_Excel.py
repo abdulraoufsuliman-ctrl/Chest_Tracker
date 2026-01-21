@@ -177,7 +177,24 @@ def highlight_points(val):
             "font-weight: 700;"
             "text-align: center;"
         )
-
+        
+def highlight_points_castle(val):
+    if isinstance(val, (int, float)):
+        if val > 0:
+            return (
+                "background-color: #e6f4ea;"
+                "color: #1e7f43;"
+                "font-weight: 600;"
+                "text-align: center;"
+            )
+        else:
+            return (
+                "background-color: #fce8e6;"
+                "color: #c5221f;"
+                "font-weight: 600;"
+                "text-align: center;"
+            )
+    return "text-align: center
 
 
 
@@ -194,6 +211,12 @@ def load_and_display(file_name):
         num_cols = df.select_dtypes(include="number").columns
         df[num_cols] = df[num_cols].fillna(0)
 
+        if is_castle:
+            points_highlight_func = highlight_points_castle
+        else:
+            points_highlight_func = def highlight_points
+
+       
         # تنسيق الستايل
         styled_df = (
             df.style
@@ -245,6 +268,7 @@ with tab3:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx")
+
 
 
 
