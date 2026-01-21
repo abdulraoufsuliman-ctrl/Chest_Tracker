@@ -83,7 +83,7 @@ st.markdown("""
     color: #5f6368;
     white-space: nowrap;
     margin-bottom: 10px;
-    text-align: right;
+    text-align: Left;
 }
 /* ================== تنسيق الجدول (حواف حادة) ================== */
 .stDataFrame {
@@ -173,8 +173,8 @@ def highlight_points_castle(val):
         )
     elif val == 0:
         return (
-            "background-color: #fff4ce;"
-            "color: #7a5c00;"
+            "background-color: #fce8e6;"
+            "color: #c5221f;"
             "font-weight: 700;"
             "text-align: center;"
         )
@@ -253,3 +253,4 @@ with tab3:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
