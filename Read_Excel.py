@@ -47,16 +47,6 @@ st.markdown("""
 
 /* ================== إزالة الخط السفلي للتابات وجعلها ملتصقة ================== */
 
-#/* إزالة الخط الممتد تحت التابات */
-#[data-testid="stTabs"] {
-#    border-bottom: none !important;
-#}
-
-/* إزالة المسافة الفاصلة بين التابات والمحتوى (الجدول) */
-#[data-testid="stTabContent"] {
- #   padding-top: 0px !important;
-#}
-
 /* إزالة الخط السفلي الافتراضي من Streamlit */
 [data-testid="stTabs"] [data-baseweb="tab-border"] {
     display: none !important;
@@ -87,19 +77,13 @@ st.markdown("""
 }
 
 
-/* صف التابات + التاريخ */
-.tabs-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0;   /* دمج مع الجدول */
-}
-
 /* التاريخ */
 .tabs-date {
     font-size: 12px;
     color: #5f6368;
     white-space: nowrap;
+    margin-bottom: 10px;
+    text-align: right;
 }
 /* ================== تنسيق الجدول (حواف حادة) ================== */
 .stDataFrame {
@@ -134,7 +118,6 @@ def get_file_modified_time(file_name):
 # ================== دالة تلوين الخلايا ==================
 def highlight_cells(val):
     if isinstance(val, (int, float)):
-    
         if val > 0:
             return (
                 "background-color: #e6f4ea;"
@@ -151,9 +134,7 @@ def highlight_cells(val):
             )
     return "text-align: center;"
 
-
-
-def highlight_points(val):
+def highlight_points_normal(val):
     if not isinstance(val, (int, float)):
         return "text-align: center;"
 
@@ -183,48 +164,52 @@ def highlight_points_castle(val):
     if not isinstance(val, (int, float)):
         return "text-align: center;"
 
-        if val > 0:
-            return (
-                "background-color: #e6f4ea;"
-                "color: #1e7f43;"
-                "font-weight: 600;"
-                "text-align: center;"
-            )
-        else:
-            return (
-                "background-color: #fce8e6;"
-                "color: #c5221f;"
-                "font-weight: 600;"
-                "text-align: center;"
-           )
+    if val > 0:
+        return (
+            "background-color: #e6f4ea;"
+            "color: #1e7f43;"
+            "font-weight: 700;"
+            "text-align: center;"
+        )
+    elif val == 0:
+        return (
+            "background-color: #fff4ce;"
+            "color: #7a5c00;"
+            "font-weight: 700;"
+            "text-align: center;"
+        )
+    else:  # val < 0
+        return (
+            "background-color: #fce8e6;"
+            "color: #c5221f;"
+            "font-weight: 700;"
+            "text-align: center;"
+        )
 
 
 # ================== دالة تحميل وعرض البيانات ==================
-def load_and_display(file_name):
+def load_and_display(file_name, is_castle=False):
     try:
         # قراءة البيانات
         df = pd.read_excel(file_name, sheet_name="Results")
         
-        # تنظيف البيانات
-        #df = df.dropna(how="all", axis=0).dropna(how="all", axis=1)
-
         # تحويل الأعمدة الرقمية وتنسيقها
         num_cols = df.select_dtypes(include="number").columns
         df[num_cols] = df[num_cols].fillna(0)
 
+        # اختيار دالة التلوين المناسبة للنقاط
         if is_castle:
             points_highlight_func = highlight_points_castle
         else:
-            points_highlight_func =  highlight_points
+            points_highlight_func = highlight_points_normal
 
-       
         # تنسيق الستايل
         styled_df = (
             df.style
             .format("{:,}", subset=num_cols)
         
             # تلوين عمود Points بشروط خاصة
-            .applymap(highlight_points, subset=["Points"])
+            .applymap(points_highlight_func, subset=["Points"])
         
             # تلوين بقية الأعمدة الرقمية
             .applymap(highlight_cells, subset=df.columns[2:])
@@ -234,7 +219,6 @@ def load_and_display(file_name):
                 "font-size": "14px"
             })
         )
-
 
         st.dataframe(
             styled_df,
@@ -269,32 +253,3 @@ with tab3:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
