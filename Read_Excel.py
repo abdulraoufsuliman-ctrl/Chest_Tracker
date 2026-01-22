@@ -15,14 +15,7 @@ st.markdown("""
 .main {
     background-color: #f5f7fa;
 }
-/* إخفاء الماركة المائية والاسم في الأسفل */
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
 
-/* إخفاء الاسم في أسفل الشاشة */
-[data-testid="stDecoration"] {display: none;}
-[data-testid="stToolbar"] {display: none;}
-.css-164nlkn {display: none;}
 /* تقليل الفراغ العلوي وتوسيط المحتوى */
 .block-container {
     padding-top: 1.5rem;
@@ -268,4 +261,5 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
