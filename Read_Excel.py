@@ -32,7 +32,7 @@ st.markdown("""
 
 /* تقليل الفراغ العلوي وتوسيط المحتوى */
 .block-container {
-    padding-top: 2rem;
+    padding-top: 0.5rem;
     max-width: 95%;
 }
 
@@ -277,6 +277,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
