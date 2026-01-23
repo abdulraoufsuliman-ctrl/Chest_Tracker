@@ -5,7 +5,7 @@ import os
 # أضف هذا الجزء في بداية الكود بعد import مباشرة
 hide_st_style = """
             <style>
-            #MainMenu {visibility: hidden;}
+            MainMenu {visibility: hidden;}
             footer {visibility: hidden;}
             header {visibility: hidden;}
             </style>
@@ -275,6 +275,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
