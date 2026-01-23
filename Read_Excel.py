@@ -4,6 +4,13 @@ from datetime import datetime, timedelta
 import os
 # أضف هذا الجزء في بداية الكود بعد import مباشرة
 
+
+# ================== إعداد الصفحة ==================
+st.set_page_config(
+    page_title="Player Results",
+    layout="wide"
+)
+
 hide_style = """
     <style>
     /* إخفاء القائمة والشعار والشريط العلوي */
@@ -22,11 +29,6 @@ hide_style = """
     </style>
     """
 st.markdown(hide_style, unsafe_allow_html=True)
-# ================== إعداد الصفحة ==================
-st.set_page_config(
-    page_title="Player Results",
-    layout="wide"
-)
 
 # ================== CSS المطور لتحسين المظهر ==================
 st.markdown("""
@@ -286,6 +288,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
