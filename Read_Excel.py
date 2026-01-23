@@ -13,23 +13,16 @@ st.set_page_config(
 
 hide_style = """
     <style>
-    /* إخفاء القائمة والشعار والشريط العلوي */
     #MainMenu {visibility: hidden;}
     header {visibility: hidden;}
-    
-    /* إخفاء شريط الـ Footer بالكامل */
     footer {visibility: hidden;}
-    .stAppDeployButton {display:none;}
-    div[data-testid="stStatusWidget"] {visibility: hidden;}
-    
-    /* استهداف شريط "Hosted with Streamlit" الجديد */
-    .viewerBadge_container__1QS1n {display: none !important;}
-    .st-emotion-cache-1647ite {display: none !important;}
+    div[data-testid="stDecoration"] {display:none !important;}
     div[class^="viewerBadge"] {display: none !important;}
+    .st-emotion-cache-1647ite {display: none !important;}
+    [data-testid="stStatusWidget"] {display: none !important;}
     </style>
     """
 st.markdown(hide_style, unsafe_allow_html=True)
-
 # ================== CSS المطور لتحسين المظهر ==================
 st.markdown("""
 <style>
@@ -288,6 +281,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
