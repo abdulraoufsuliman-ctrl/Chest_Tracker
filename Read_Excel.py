@@ -25,7 +25,7 @@ st.markdown(
     """
     <style>
     footer {visibility: hidden;}
-    #MainMenu {visibility: hidden;}
+    MainMenu {visibility: hidden;}
     header {visibility: hidden;}
     </style>
     """,
@@ -279,6 +279,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
