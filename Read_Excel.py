@@ -11,36 +11,14 @@ st.set_page_config(
     layout="wide"
 )
 
-hide_all_styles = """
-    <style>
-    /* إخفاء القائمة والعنوان العلوي */
-    #MainMenu {visibility: hidden;}
-    header {visibility: hidden;}
-    footer {visibility: hidden !important;}
-
-    /* إخفاء شريط الهوية (Created by) بأكثر من طريقة */
-    [data-testid="stStatusWidget"] {display: none !important;}
-    .stAppDeployButton {display: none !important;}
-    
-    /* استهداف العناصر العائمة في أسفل اليمين واليسار */
-    div[class^="viewerBadge"] {display: none !important;}
-    div[class*="viewerBadge"] {display: none !important;}
-    div[data-testid="stDecoration"] {display: none !important;}
-    
-    /* منع ظهور أي نصوص في تذييل الصفحة */
-    .st-emotion-cache-zq59db {display: none !important;}
-    .st-emotion-cache-1647ite {display: none !important;}
-    
-    /* التخلص من الفراغ الأبيض السفلي الذي قد يتركه الشريط المخفي */
-    .main .block-container {
-        padding-bottom: 0rem !important;
-    }
-    
-    /* كود إضافي لإخفاء أي رابط يخص Streamlit */
-    a[href*="streamlit.io"] {display: none !important;}
-    </style>
-    """
-st.markdown(hide_all_styles, unsafe_allow_html=True)
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
 # ================== CSS المطور لتحسين المظهر ==================
 st.markdown("""
 <style>
@@ -299,6 +277,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
