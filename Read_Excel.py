@@ -17,13 +17,13 @@ st.markdown("""
 }
 
 
-hide_st_style = """
+hide_st_style = 
             <style>
-            #MainMenu {visibility: hidden;}
+            MainMenu {visibility: hidden;}
             footer {visibility: hidden;}
             header {visibility: hidden;}
             </style>
-            """
+           
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
 /* تقليل الفراغ العلوي وتوسيط المحتوى */
@@ -273,6 +273,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
