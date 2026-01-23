@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 import os
-# أضف هذا الجزء في بداية الكود بعد import مباشرة
+
 
 
 # ================== إعداد الصفحة ==================
@@ -32,7 +32,7 @@ st.markdown("""
 
 /* تقليل الفراغ العلوي وتوسيط المحتوى */
 .block-container {
-    padding-top: 1.5rem;
+    padding-top: 2rem;
     max-width: 95%;
 }
 
@@ -277,6 +277,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
