@@ -195,7 +195,9 @@ def load_and_display(file_name, is_castle=False):
         
         # تحويل الأعمدة الرقمية وتنسيقها
         num_cols = df.select_dtypes(include="number").columns
-        df[num_cols] = df[num_cols].fillna(0)
+        for col in num_cols:
+            # تحويل القيم إلى أعداد صحيحة (بدون فاصلة عشرية)
+            df[col] = df[col].fillna(0).astype(int)
 
         # اختيار دالة التلوين المناسبة للنقاط
         if is_castle:
@@ -261,5 +263,6 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
