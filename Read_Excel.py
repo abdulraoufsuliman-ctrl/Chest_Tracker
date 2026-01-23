@@ -204,7 +204,7 @@ def load_and_display(file_name, is_castle=False):
             if col not in ['Name', 'Points', 'total Chests']:  # استبعاد الأعمدة الأساسية
                 if (df[col] == 0).all():  # إذا كانت جميع القيم في العمود = 0
                     columns_to_drop.append(col)
-
+        df_display = df.drop(columns=columns_to_drop)
         # اختيار دالة التلوين المناسبة للنقاط
         if is_castle:
             points_highlight_func = highlight_points_castle
@@ -269,6 +269,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
