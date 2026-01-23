@@ -19,14 +19,18 @@ st.markdown("""
 
 
 
-hide_st_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            header {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_st_style, unsafe_allow_html=True)
+
+# تأكد أن هذا الكود داخل الدالة الرئيسية أو في بداية الملف
+st.markdown(
+    """
+    <style>
+    footer {visibility: hidden;}
+    #MainMenu {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 /* تقليل الفراغ العلوي وتوسيط المحتوى */
 .block-container {
@@ -275,6 +279,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
