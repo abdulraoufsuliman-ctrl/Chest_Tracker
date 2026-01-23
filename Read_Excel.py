@@ -3,14 +3,25 @@ import pandas as pd
 from datetime import datetime, timedelta
 import os
 # أضف هذا الجزء في بداية الكود بعد import مباشرة
-hide_st_style = """
-            <style>
-            MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            header {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_st_style, unsafe_allow_html=True)
+
+hide_style = """
+    <style>
+    /* إخفاء القائمة والشعار والشريط العلوي */
+    #MainMenu {visibility: hidden;}
+    header {visibility: hidden;}
+    
+    /* إخفاء شريط الـ Footer بالكامل */
+    footer {visibility: hidden;}
+    .stAppDeployButton {display:none;}
+    div[data-testid="stStatusWidget"] {visibility: hidden;}
+    
+    /* استهداف شريط "Hosted with Streamlit" الجديد */
+    .viewerBadge_container__1QS1n {display: none !important;}
+    .st-emotion-cache-1647ite {display: none !important;}
+    div[class^="viewerBadge"] {display: none !important;}
+    </style>
+    """
+st.markdown(hide_style, unsafe_allow_html=True)
 # ================== إعداد الصفحة ==================
 st.set_page_config(
     page_title="Player Results",
@@ -275,6 +286,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
