@@ -15,6 +15,8 @@ st.markdown("""
 .main {
     background-color: #f5f7fa;
 }
+
+
 hide_st_style = """
             <style>
             #MainMenu {visibility: hidden;}
@@ -23,6 +25,7 @@ hide_st_style = """
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
+
 /* تقليل الفراغ العلوي وتوسيط المحتوى */
 .block-container {
     padding-top: 1.5rem;
@@ -270,6 +273,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
