@@ -59,6 +59,18 @@ st.markdown("""
 
 }
 
+if st.button("📊 Used Points"):
+    with st.modal("Used Points – Details"):
+        df_used = pd.read_excel("Used_Points.xlsx")
+
+        st.dataframe(
+            df_used,
+            use_container_width=True,
+            height=400,
+            hide_index=True
+        )
+
+
 /* ================== إزالة الخط السفلي للتابات وجعلها ملتصقة ================== */
 
 /* إزالة الخط السفلي الافتراضي من Streamlit */
@@ -277,6 +289,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
