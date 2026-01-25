@@ -37,6 +37,7 @@ st.markdown("""
     align-items: center;
     gap: 20px;
     margin-bottom: 25px;
+    position: relative;
 }
 
 .logo {
@@ -104,42 +105,12 @@ st.markdown("""
     border-radius: 0px !important; 
 }
 
-/* تنسيق للنافذة المنبثقة */
-.popup-container {
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-}
-
-.popup-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #1e3a8a;
-    text-align: center;
-}
-
-.popup-close-btn {
-    background-color: #ef4444;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 20px;
-}
-
-.popup-close-btn:hover {
-    background-color: #dc2626;
-}
-
-/* تنسيق زر النقاط المستخدمة */
+/* زر النقاط المستخدمة */
 .used-points-btn {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
     background: linear-gradient(135deg, #3b82f6, #1d4ed8);
     color: white;
     border: none;
@@ -147,92 +118,182 @@ st.markdown("""
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
-    z-index: 1000;
+    font-size: 14px;
 }
 
 .used-points-btn:hover {
     background: linear-gradient(135deg, #2563eb, #1e40af);
 }
 
-/* تنسيق الجدول في النافذة المنبثقة */
-.popup-table {
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    overflow: hidden;
+/* تنسيق للنافذة المنبثقة */
+.popup-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #3b82f6;
+}
+
+.popup-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1e3a8a;
+}
+
+.close-btn {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.close-btn:hover {
+    background-color: #dc2626;
+}
+
+/* تظليل الخلفية عند فتح النافذة المنبثقة */
+.popup-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
 
 </style>
 """, unsafe_allow_html=True)
 
-# ================== HEADER ==================
-logo_url = "https://raw.githubusercontent.com/abdulraoufsuliman-ctrl/Chest_Tracker/main/logo.png"
-
-# إنشاء حاوية للهيدر مع زر النقاط المستخدمة
-st.markdown(f"""
-<div class="header" style="position: relative;">
-    <img src="{logo_url}" class="logo">
-    <div class="title">[RUM] BOTTLES AND BATTLE</div>
-</div>
-""", unsafe_allow_html=True)
-
-# ===== زر النقاط المستخدمة =====
-# زر في الزاوية اليمنى العليا
-col1, col2, col3 = st.columns([6, 1, 1])
-with col3:
-    if st.button("📊 used_points", key="used_points_btn", type="secondary"):
-        st.session_state.show_used_points = True
-
-# ================== دالة لتحميل وعرض بيانات النقاط المستخدمة ==================
-def load_used_points():
-    try:
-        df = pd.read_excel("Used_Points.xlsx", sheet_name="Points")
-        return df
-    except Exception as e:
-        st.error(f"Error loading Used_Points.xlsx: {e}")
-        return pd.DataFrame()
-
-# ================== النافذة المنبثقة للنقاط المستخدمة ==================
+# ================== تهيئة حالة الجلسة ==================
 if 'show_used_points' not in st.session_state:
     st.session_state.show_used_points = False
 
-# عرض النافذة المنبثقة إذا كان الزر مضغوطًا
-if st.session_state.show_used_points:
-    # استخدام st.dialog للشاشة المنبثقة (يتطلب Streamlit 1.28+)
-    with st.dialog("📊 used_points"):
-        st.markdown("<div class='popup-title'>اused_points</div>", unsafe_allow_html=True)
+# ================== HEADER مع زر النقاط المستخدمة ==================
+logo_url = "https://raw.githubusercontent.com/abdulraoufsuliman-ctrl/Chest_Tracker/main/logo.png"
+
+st.markdown(f"""
+<div class="header">
+    <img src="{logo_url}" class="logo">
+    <div class="title">[RUM] BOTTLES AND BATTLE</div>
+    <button class="used-points-btn" onclick="document.getElementById('openPopup').click()">
+        📊 النقاط المستخدمة
+    </button>
+</div>
+""", unsafe_allow_html=True)
+
+# زر خفي لفتح النافذة المنبثقة
+if st.button("Open Popup", key="openPopup", type="secondary", help="hidden"):
+    st.session_state.show_used_points = True
+
+# ================== دالة لتحميل بيانات النقاط المستخدمة ==================
+def load_used_points():
+    try:
+        # التحقق من وجود الملف
+        if not os.path.exists("Used_Points.xlsx"):
+            st.error("❌ ملف Used_Points.xlsx غير موجود في المجلد الحالي")
+            return None
         
-        # تحميل وعرض البيانات
-        used_points_df = load_used_points()
+        # تحميل البيانات
+        df = pd.read_excel("Used_Points.xlsx", sheet_name="Points")
         
-        if not used_points_df.empty:
-            # تنسيق الجدول
-            styled_df = used_points_df.style.set_properties(**{
-                "border": "1px solid #e0e0e0",
-                "font-size": "14px",
-                "text-align": "center"
-            }).format("{:,}", subset=used_points_df.select_dtypes(include="number").columns)
+        # التحقق من أن البيانات غير فارغة
+        if df.empty:
+            st.warning("⚠️ ورقة Points في الملف فارغة")
+            return None
             
+        return df
+        
+    except FileNotFoundError:
+        st.error("❌ لم يتم العثور على الملف: Used_Points.xlsx")
+        return None
+    except ValueError as e:
+        if "Worksheet" in str(e) and "not found" in str(e):
+            st.error("❌ لم يتم العثور على الورقة 'Points' في الملف")
+        else:
+            st.error(f"❌ خطأ في قراءة الملف: {str(e)}")
+        return None
+    except Exception as e:
+        st.error(f"❌ خطأ غير متوقع: {str(e)}")
+        return None
+
+# ================== النافذة المنبثقة للنقاط المستخدمة ==================
+if st.session_state.show_used_points:
+    # استخدام HTML/CSS/JavaScript لعمل نافذة منبثقة
+    st.markdown("""
+    <div class="popup-background" id="usedPointsPopup">
+        <div class="popup-content">
+            <div class="popup-header">
+                <div class="popup-title">📊 النقاط المستخدمة</div>
+                <button class="close-btn" onclick="document.getElementById('closePopup').click()">✕ إغلاق</button>
+            </div>
+    """, unsafe_allow_html=True)
+    
+    # تحميل وعرض البيانات
+    used_points_df = load_used_points()
+    
+    if used_points_df is not None:
+        if not used_points_df.empty:
+            # تنسيق الأعمدة الرقمية
+            num_cols = used_points_df.select_dtypes(include="number").columns
+            for col in num_cols:
+                used_points_df[col] = used_points_df[col].fillna(0)
+            
+            # عرض الجدول
             st.dataframe(
-                styled_df,
+                used_points_df,
                 use_container_width=True,
                 height=400,
                 hide_index=True
             )
+            
+            # معلومات عن عدد الصفوف والأعمدة
+            st.caption(f"عدد السجلات: {len(used_points_df)} | عدد الأعمدة: {len(used_points_df.columns)}")
         else:
-            st.warning("لم يتم العثور على بيانات النقاط المستخدمة")
-        
-        # زر الإغلاق
-        col1, col2, col3 = st.columns([1, 1, 1])
-        with col2:
-            if st.button("إغلاق", key="close_popup", type="primary"):
-                st.session_state.show_used_points = False
-                st.rerun()
+            st.warning("⚠️ لا توجد بيانات في جدول النقاط المستخدمة")
+    else:
+        st.error("❌ تعذر تحميل بيانات النقاط المستخدمة")
+    
+    st.markdown("</div></div>", unsafe_allow_html=True)
+    
+    # زر خفي للإغلاق
+    if st.button("Close Popup", key="closePopup", type="secondary", help="hidden"):
+        st.session_state.show_used_points = False
+        st.rerun()
 
 # ================== الدوال المساعدة ==================
 def get_file_modified_time(file_name):
-    ts = os.path.getmtime(file_name)
-    dt = datetime.fromtimestamp(ts) + timedelta(hours=2)
-    return dt.strftime("%Y-%m-%d %H:%M (UTC+2)")
+    try:
+        ts = os.path.getmtime(file_name)
+        dt = datetime.fromtimestamp(ts) + timedelta(hours=2)
+        return dt.strftime("%Y-%m-%d %H:%M (UTC+2)")
+    except:
+        return "غير متوفر"
 
 # ================== دالة تلوين الخلايا ==================
 def highlight_cells(val):
@@ -305,9 +366,14 @@ def highlight_points_castle(val):
             "text-align: center;"
         )
 
-# ================== دالة تحميل وعرض البيانات ==================
+# ================== دالة تحميل وعرض البيانات الرئيسية ==================
 def load_and_display(file_name, is_castle=False):
     try:
+        # التحقق من وجود الملف
+        if not os.path.exists(file_name):
+            st.error(f"❌ الملف {file_name} غير موجود")
+            return
+        
         df = pd.read_excel(file_name, sheet_name="Results")
         
         num_cols = df.select_dtypes(include="number").columns
@@ -337,7 +403,7 @@ def load_and_display(file_name, is_castle=False):
             hide_index=True
         )
     except Exception as e:
-        st.error(f"Error loading {file_name}: {e}")
+        st.error(f"❌ خطأ في تحميل {file_name}: {str(e)}")
 
 # ================== Tabs (الفترات) ==================
 tab1, tab2, tab3, tab4 = st.tabs(["Period 1", "Period 2", "Period 3", "Castle Competition"])
@@ -370,5 +436,13 @@ with tab4:
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
 
-
-
+# إضافة JavaScript لإغلاق النافذة عند الضغط على ESC
+st.markdown("""
+<script>
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' && document.getElementById('usedPointsPopup')) {
+        document.getElementById('closePopup').click();
+    }
+});
+</script>
+""", unsafe_allow_html=True)
