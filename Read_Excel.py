@@ -55,8 +55,8 @@ st.markdown("""
 
 /* Ultra Small Chest Points Button - Force strict sizing */
 div[data-testid="stButton"] > button {
-    height: 18px !important;
-    min-height: 18px !important;
+    height: 25px !important;
+    min-height: 25px !important;
     line-height: 1 !important;
     padding: 0px 8px !important;
     font-size: 9px !important;
@@ -192,3 +192,4 @@ for i, tab in enumerate([tab1, tab2, tab3, tab4], 1):
         fname = f"Results{i}.xlsx" if i < 4 else "Results_Castle.xlsx"
         st.markdown(f"<div class='tabs-date'>Update: {get_file_modified_time(fname)}</div>", unsafe_allow_html=True)
         load_and_display(fname, is_castle=(i==4))
+
