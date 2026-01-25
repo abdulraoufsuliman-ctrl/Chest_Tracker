@@ -3,8 +3,6 @@ import pandas as pd
 from datetime import datetime, timedelta
 import os
 
-
-
 # ================== إعداد الصفحة ==================
 st.set_page_config(
     page_title="Player Results",
@@ -20,20 +18,12 @@ hide_st_style = """
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
-# ===== زر النقاط المستخدمة =====
-
-
-
 # ================== CSS المطور لتحسين المظهر ==================
 st.markdown("""
 <style>
 .main {
     background-color: #f5f7fa;
 }
-
-
-
-
 
 /* تقليل الفراغ العلوي وتوسيط المحتوى */
 .block-container {
@@ -61,11 +51,7 @@ st.markdown("""
     color: #000000;
     line-height: 2.9;
     padding-top: 4px;
-
 }
-
-
-
 
 /* ================== إزالة الخط السفلي للتابات وجعلها ملتصقة ================== */
 
@@ -82,9 +68,9 @@ st.markdown("""
 /* تصميم التاب الفردي */
 [data-testid="stTab"] {
     height: 45px;
-    background-color: #f0f2f6; /* لون خلفية خفيف للتابات غير النشطة */
-    color: #31333F !important; /* إظهار النص بوضوح */
-    border-radius: 8px 8px 0 0 !important; /* حواف علوية دائرية قليلاً */
+    background-color: #f0f2f6;
+    color: #31333F !important;
+    border-radius: 8px 8px 0 0 !important;
     border: 1px solid #ddd !important;
     border-bottom: none !important;
     padding: 0 30px !important;
@@ -98,7 +84,6 @@ st.markdown("""
     border-color: #3b6df2 !important;
 }
 
-
 /* التاريخ */
 .tabs-date {
     font-size: 12px;
@@ -107,9 +92,10 @@ st.markdown("""
     margin-bottom: 10px;
     text-align: Left;
 }
+
 /* ================== تنسيق الجدول (حواف حادة) ================== */
 .stDataFrame {
-    margin-top: -1px !important; /* سحب الجدول للأعلى ليلتصق بالتابات */
+    margin-top: -1px !important;
 }
 
 /* حواف حادة للجدول */
@@ -118,20 +104,131 @@ st.markdown("""
     border-radius: 0px !important; 
 }
 
+/* تنسيق للنافذة المنبثقة */
+.popup-container {
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.popup-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #1e3a8a;
+    text-align: center;
+}
+
+.popup-close-btn {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.popup-close-btn:hover {
+    background-color: #dc2626;
+}
+
+/* تنسيق زر النقاط المستخدمة */
+.used-points-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.used-points-btn:hover {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+}
+
+/* تنسيق الجدول في النافذة المنبثقة */
+.popup-table {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
 # ================== HEADER ==================
 logo_url = "https://raw.githubusercontent.com/abdulraoufsuliman-ctrl/Chest_Tracker/main/logo.png"
 
+# إنشاء حاوية للهيدر مع زر النقاط المستخدمة
 st.markdown(f"""
-<div class="header">
+<div class="header" style="position: relative;">
     <img src="{logo_url}" class="logo">
     <div class="title">[RUM] BOTTLES AND BATTLE</div>
 </div>
 """, unsafe_allow_html=True)
 
-#=============================================
+# ===== زر النقاط المستخدمة =====
+# زر في الزاوية اليمنى العليا
+col1, col2, col3 = st.columns([6, 1, 1])
+with col3:
+    if st.button("📊 النقاط المستخدمة", key="used_points_btn", type="secondary"):
+        st.session_state.show_used_points = True
+
+# ================== دالة لتحميل وعرض بيانات النقاط المستخدمة ==================
+def load_used_points():
+    try:
+        df = pd.read_excel("Used_Points.xlsx", sheet_name="Points")
+        return df
+    except Exception as e:
+        st.error(f"Error loading Used_Points.xlsx: {e}")
+        return pd.DataFrame()
+
+# ================== النافذة المنبثقة للنقاط المستخدمة ==================
+if 'show_used_points' not in st.session_state:
+    st.session_state.show_used_points = False
+
+# عرض النافذة المنبثقة إذا كان الزر مضغوطًا
+if st.session_state.show_used_points:
+    # استخدام st.dialog للشاشة المنبثقة (يتطلب Streamlit 1.28+)
+    with st.dialog("📊 النقاط المستخدمة"):
+        st.markdown("<div class='popup-title'>النقاط المستخدمة</div>", unsafe_allow_html=True)
+        
+        # تحميل وعرض البيانات
+        used_points_df = load_used_points()
+        
+        if not used_points_df.empty:
+            # تنسيق الجدول
+            styled_df = used_points_df.style.set_properties(**{
+                "border": "1px solid #e0e0e0",
+                "font-size": "14px",
+                "text-align": "center"
+            }).format("{:,}", subset=used_points_df.select_dtypes(include="number").columns)
+            
+            st.dataframe(
+                styled_df,
+                use_container_width=True,
+                height=400,
+                hide_index=True
+            )
+        else:
+            st.warning("لم يتم العثور على بيانات النقاط المستخدمة")
+        
+        # زر الإغلاق
+        col1, col2, col3 = st.columns([1, 1, 1])
+        with col2:
+            if st.button("إغلاق", key="close_popup", type="primary"):
+                st.session_state.show_used_points = False
+                st.rerun()
+
+# ================== الدوال المساعدة ==================
 def get_file_modified_time(file_name):
     ts = os.path.getmtime(file_name)
     dt = datetime.fromtimestamp(ts) + timedelta(hours=2)
@@ -208,36 +305,25 @@ def highlight_points_castle(val):
             "text-align: center;"
         )
 
-
 # ================== دالة تحميل وعرض البيانات ==================
 def load_and_display(file_name, is_castle=False):
     try:
-        # قراءة البيانات
         df = pd.read_excel(file_name, sheet_name="Results")
         
-        # تحويل الأعمدة الرقمية وتنسيقها
         num_cols = df.select_dtypes(include="number").columns
         for col in num_cols:
-            # تحويل القيم إلى أعداد صحيحة (بدون فاصلة عشرية)
             df[col] = df[col].fillna(0).astype(int)
 
-        # اختيار دالة التلوين المناسبة للنقاط
         if is_castle:
             points_highlight_func = highlight_points_castle
         else:
             points_highlight_func = highlight_points_normal
 
-        # تنسيق الستايل
         styled_df = (
             df.style
             .format("{:,}", subset=num_cols)
-        
-            # تلوين عمود Points بشروط خاصة
             .applymap(points_highlight_func, subset=["Points"])
-        
-            # تلوين بقية الأعمدة الرقمية
             .applymap(highlight_cells, subset=df.columns[2:])
-        
             .set_properties(**{
                 "border": "1px solid #e0e0e0",
                 "font-size": "14px"
@@ -254,8 +340,7 @@ def load_and_display(file_name, is_castle=False):
         st.error(f"Error loading {file_name}: {e}")
 
 # ================== Tabs (الفترات) ==================
-# تأكدنا هنا أن أسماء الفترات مكتوبة بوضوح
-tab1, tab2, tab3, tab4 = st.tabs(["Period 1", "Period 2",  "Period 3", "Castle Competition"])
+tab1, tab2, tab3, tab4 = st.tabs(["Period 1", "Period 2", "Period 3", "Castle Competition"])
 
 with tab1:
     st.markdown(
@@ -278,39 +363,9 @@ with tab3:
     )
     load_and_display("Results3.xlsx", is_castle=False)
 
-
 with tab4:
     st.markdown(
         f"<div class='tabs-date'>Last update: {get_file_modified_time('Results_Castle.xlsx')}</div>",
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
