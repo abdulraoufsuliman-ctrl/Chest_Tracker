@@ -22,7 +22,7 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 
 # ===== زر النقاط المستخدمة =====
 if st.button("📊 Used Points"):
-    with st.modal("Used Points – Details"):
+    with st.dialog("Used Points – Details"):
         df_used = pd.read_excel("Used_Points.xlsx")
         st.dataframe(
             df_used,
@@ -30,6 +30,7 @@ if st.button("📊 Used Points"):
             height=400,
             hide_index=True
         )
+
 
 # ================== CSS المطور لتحسين المظهر ==================
 st.markdown("""
@@ -292,6 +293,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
