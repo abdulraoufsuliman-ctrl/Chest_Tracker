@@ -21,15 +21,18 @@ hide_st_style = """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
 # ===== زر النقاط المستخدمة =====
+@st.experimental_dialog("Used Points – Details")
+def show_used_points():
+    df_used = pd.read_excel("Used_Points.xlsx", sheet_name="Points")
+    st.dataframe(
+        df_used,
+        use_container_width=True,
+        height=400,
+        hide_index=True
+    )
+
 if st.button("📊 Used Points"):
-    with st.dialog("Used Points – Details"):
-        df_used = pd.read_excel("Used_Points.xlsx")
-        st.dataframe(
-            df_used,
-            use_container_width=True,
-            height=400,
-            hide_index=True
-        )
+    show_used_points()
 
 
 # ================== CSS المطور لتحسين المظهر ==================
@@ -293,6 +296,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
