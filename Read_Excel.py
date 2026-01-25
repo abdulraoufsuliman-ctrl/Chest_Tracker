@@ -198,7 +198,7 @@ if 'show_used_points' not in st.session_state:
 # عرض النافذة المنبثقة إذا كان الزر مضغوطًا
 if st.session_state.show_used_points:
     # استخدام st.dialog للشاشة المنبثقة (يتطلب Streamlit 1.28+)
-    with st.dialog("📊 النقاط المستخدمة"):
+    with st.dialog("📊 used_points"):
         st.markdown("<div class='popup-title'>النقاط المستخدمة</div>", unsafe_allow_html=True)
         
         # تحميل وعرض البيانات
@@ -369,4 +369,5 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
