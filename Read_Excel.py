@@ -19,6 +19,18 @@ hide_st_style = """
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
+
+# ===== زر النقاط المستخدمة =====
+if st.button("📊 Used Points"):
+    with st.modal("Used Points – Details"):
+        df_used = pd.read_excel("Used_Points.xlsx")
+        st.dataframe(
+            df_used,
+            use_container_width=True,
+            height=400,
+            hide_index=True
+        )
+
 # ================== CSS المطور لتحسين المظهر ==================
 st.markdown("""
 <style>
@@ -280,6 +292,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
