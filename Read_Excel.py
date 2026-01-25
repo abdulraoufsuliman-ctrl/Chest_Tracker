@@ -199,7 +199,7 @@ if 'show_used_points' not in st.session_state:
 if st.session_state.show_used_points:
     # استخدام st.dialog للشاشة المنبثقة (يتطلب Streamlit 1.28+)
     with st.dialog("📊 used_points"):
-        st.markdown("<div class='popup-title'>النقاط المستخدمة</div>", unsafe_allow_html=True)
+        st.markdown("<div class='popup-title'>اused_points</div>", unsafe_allow_html=True)
         
         # تحميل وعرض البيانات
         used_points_df = load_used_points()
@@ -369,5 +369,6 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
