@@ -179,7 +179,7 @@ st.markdown(f"""
 # زر في الزاوية اليمنى العليا
 col1, col2, col3 = st.columns([6, 1, 1])
 with col3:
-    if st.button("📊 النقاط المستخدمة", key="used_points_btn", type="secondary"):
+    if st.button("📊 used_points", key="used_points_btn", type="secondary"):
         st.session_state.show_used_points = True
 
 # ================== دالة لتحميل وعرض بيانات النقاط المستخدمة ==================
@@ -369,3 +369,4 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
