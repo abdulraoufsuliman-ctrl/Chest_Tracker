@@ -27,43 +27,55 @@ st.markdown("""
 
 /* Reduce top padding and center content */
 .block-container {
-    padding-top: 0.1rem;
+    padding-top: 0rem;
     max-width: 95%;
+}
+
+/* New Top Settings Bar */
+.settings-bar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0;
+    margin-bottom: -10px;
 }
 
 /* Header layout */
 .header-container {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-.header-left {
-    display: flex;
     align-items: center;
     gap: 20px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
 }
 
 .logo {
-    width: 70px;
+    width: 60px;
     height: auto;
 }
 
 .title {
-    font-size: 35px;
+    font-size: 32px;
     font-weight: 800;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     color: #000000;
-    line-height: 2.9;
-    padding-top: 4px;
 }
 
-/* Chest Points Button */
-.stButton>button {
-    border-radius: 8px;
-    padding: 10px 24px;
-    font-weight: 600;
+/* Smaller Chest Points Button */
+div[data-testid="stButton"] > button {
+    height: 32px;
+    padding: 0px 15px !important;
+    font-size: 13px !important;
+    border-radius: 6px !important;
+    background-color: white !important;
+    color: #31333F !important;
+    border: 1px solid #ddd !important;
+    font-weight: 500 !important;
+}
+
+div[data-testid="stButton"] > button:hover {
+    border-color: #4f8cff !important;
+    color: #4f8cff !important;
 }
 
 /* Remove Tab Bottom Border and make them connected */
@@ -77,14 +89,15 @@ st.markdown("""
 
 /* Individual Tab Design */
 [data-testid="stTab"] {
-    height: 45px;
+    height: 40px;
     background-color: #f0f2f6; 
     color: #31333F !important; 
     border-radius: 8px 8px 0 0 !important; 
     border: 1px solid #ddd !important;
     border-bottom: none !important;
-    padding: 0 30px !important;
+    padding: 0 25px !important;
     font-weight: 600;
+    font-size: 14px;
 }
 
 /* Active Tab */
@@ -113,29 +126,6 @@ st.markdown("""
     border-radius: 0px !important; 
 }
 
-/* Custom Modal Styles */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    width: 80%;
-    max-height: 80vh;
-    overflow-y: auto;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
 </style>
 """, unsafe_allow_html=True)
 
@@ -149,51 +139,41 @@ def open_modal():
 def close_modal():
     st.session_state.show_modal = False
 
-# ================== HEADER ==================
-logo_url = "https://raw.githubusercontent.com/abdulraoufsuliman-ctrl/Chest_Tracker/main/logo.png"
+# ================== TOP SETTINGS BAR & HEADER ==================
 
-# Header Columns
-col_header, col_btn = st.columns([0.8, 0.2])
-
-with col_header:
-    st.markdown(f"""
-    <div class="header-left">
-        <img src="{logo_url}" class="logo">
-        <div class="title">[RUM] BOTTLES AND BATTLE</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col_btn:
-    st.write("<br>", unsafe_allow_html=True) 
+# 1. Top Bar for the Button
+t1, t2 = st.columns([0.85, 0.15])
+with t2:
     if st.button("📊 Chest Points", on_click=open_modal, use_container_width=True):
         pass
 
+# 2. Main Header (Logo + Title)
+logo_url = "https://raw.githubusercontent.com/abdulraoufsuliman-ctrl/Chest_Tracker/main/logo.png"
+st.markdown(f"""
+<div class="header-container">
+    <img src="{logo_url}" class="logo">
+    <div class="title">[RUM] BOTTLES AND BATTLE</div>
+</div>
+""", unsafe_allow_html=True)
+
 # ================== Points Modal ==================
 if st.session_state.show_modal:
-    with st.container():
-        st.markdown("---")
-        modal_cols = st.columns([0.1, 0.8, 0.1])
-        with modal_cols[1]:
-            st.subheader("📋 Used Chest Points")
-            
-            try:
-                # Read Used_Points.xlsx
-                df_used = pd.read_excel("Used_Points.xlsx", sheet_name="Points")
-                
-                # Format numeric columns
-                num_cols_used = df_used.select_dtypes(include="number").columns
-                for col in num_cols_used:
-                    df_used[col] = df_used[col].fillna(0).astype(int)
-                
-                # Display dataframe
-                st.dataframe(df_used, use_container_width=True, hide_index=True, height=400)
-                
-            except Exception as e:
-                st.error(f"Error loading Used_Points.xlsx: {e}")
-            
-            if st.button("Close Screen ✖️", on_click=close_modal):
-                st.rerun()
-        st.markdown("---")
+    st.markdown("---")
+    m_col1, m_col2, m_col3 = st.columns([0.1, 0.8, 0.1])
+    with m_col2:
+        st.subheader("📋 Used Chest Points")
+        try:
+            df_used = pd.read_excel("Used_Points.xlsx", sheet_name="Points")
+            num_cols_used = df_used.select_dtypes(include="number").columns
+            for col in num_cols_used:
+                df_used[col] = df_used[col].fillna(0).astype(int)
+            st.dataframe(df_used, use_container_width=True, hide_index=True, height=400)
+        except Exception as e:
+            st.error(f"Error loading Used_Points.xlsx: {e}")
+        
+        if st.button("Close Screen ✖️", on_click=close_modal):
+            st.rerun()
+    st.markdown("---")
 
 # ================== Helper Functions ==================
 def get_file_modified_time(file_name):
