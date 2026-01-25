@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 import os
 
-# ================== إعداد الصفحة ==================
+# ================== Page Setup ==================
 st.set_page_config(
     page_title="Player Results",
     layout="wide"
@@ -18,14 +18,14 @@ hide_st_style = """
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
-# ================== CSS المطور لتحسين المظهر والنافذة المنبثقة ==================
+# ================== Enhanced CSS for UI and Modal ==================
 st.markdown("""
 <style>
 .main {
     background-color: #f5f7fa;
 }
 
-/* تقليل الفراغ العلوي وتوسيط المحتوى */
+/* Reduce top padding and center content */
 .block-container {
     padding-top: 0.1rem;
     max-width: 95%;
@@ -59,14 +59,14 @@ st.markdown("""
     padding-top: 4px;
 }
 
-/* زر نقاط الصندوق */
+/* Chest Points Button */
 .stButton>button {
     border-radius: 8px;
     padding: 10px 24px;
     font-weight: 600;
 }
 
-/* إزالة الخط السفلي للتابات وجعلها ملتصقة */
+/* Remove Tab Bottom Border and make them connected */
 [data-testid="stTabs"] [data-baseweb="tab-border"] {
     display: none !important;
 }
@@ -75,6 +75,7 @@ st.markdown("""
     gap: 5px; 
 }
 
+/* Individual Tab Design */
 [data-testid="stTab"] {
     height: 45px;
     background-color: #f0f2f6; 
@@ -86,20 +87,23 @@ st.markdown("""
     font-weight: 600;
 }
 
+/* Active Tab */
 [data-testid="stTab"][aria-selected="true"] {
     background: linear-gradient(135deg, #4f8cff, #3b6df2) !important;
     color: white !important;
     border-color: #3b6df2 !important;
 }
 
+/* Date Display */
 .tabs-date {
     font-size: 12px;
     color: #5f6368;
     white-space: nowrap;
     margin-bottom: 10px;
-    text-align: Left;
+    text-align: left;
 }
 
+/* Table Alignment */
 .stDataFrame {
     margin-top: -1px !important; 
 }
@@ -109,7 +113,7 @@ st.markdown("""
     border-radius: 0px !important; 
 }
 
-/* تنسيق النافذة المنبثقة المخصصة */
+/* Custom Modal Styles */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -148,7 +152,7 @@ def close_modal():
 # ================== HEADER ==================
 logo_url = "https://raw.githubusercontent.com/abdulraoufsuliman-ctrl/Chest_Tracker/main/logo.png"
 
-# استخدام أعمدة streamlit لوضع الزر في الهيدر بجانب العنوان
+# Header Columns
 col_header, col_btn = st.columns([0.8, 0.2])
 
 with col_header:
@@ -160,39 +164,38 @@ with col_header:
     """, unsafe_allow_html=True)
 
 with col_btn:
-    st.write("<br>", unsafe_allow_html=True) # موازنة المسافة
-    if st.button("📊 نقاط الصندوق", on_click=open_modal, use_container_width=True):
+    st.write("<br>", unsafe_allow_html=True) 
+    if st.button("📊 Chest Points", on_click=open_modal, use_container_width=True):
         pass
 
-# ================== النافذة المنبثقة (Modal) ==================
+# ================== Points Modal ==================
 if st.session_state.show_modal:
     with st.container():
-        # محاكاة نافذة منبثقة فوق المحتوى
         st.markdown("---")
         modal_cols = st.columns([0.1, 0.8, 0.1])
         with modal_cols[1]:
-            st.subheader("📋 نقاط الصندوق المستخدمة")
+            st.subheader("📋 Used Chest Points")
             
             try:
-                # قراءة ملف Used_Points.xlsx
+                # Read Used_Points.xlsx
                 df_used = pd.read_excel("Used_Points.xlsx", sheet_name="Points")
                 
-                # تنظيف البيانات (أرقام صحيحة)
+                # Format numeric columns
                 num_cols_used = df_used.select_dtypes(include="number").columns
                 for col in num_cols_used:
                     df_used[col] = df_used[col].fillna(0).astype(int)
                 
-                # عرض الجدول
+                # Display dataframe
                 st.dataframe(df_used, use_container_width=True, hide_index=True, height=400)
                 
             except Exception as e:
-                st.error(f"خطأ في تحميل ملف Used_Points.xlsx: {e}")
+                st.error(f"Error loading Used_Points.xlsx: {e}")
             
-            if st.button("إغلاق الشاشة ✖️", on_click=close_modal):
+            if st.button("Close Screen ✖️", on_click=close_modal):
                 st.rerun()
         st.markdown("---")
 
-# ================== دالة تلوين الخلايا (الكود الأصلي) ==================
+# ================== Helper Functions ==================
 def get_file_modified_time(file_name):
     try:
         ts = os.path.getmtime(file_name)
@@ -220,7 +223,7 @@ def highlight_points_castle(val):
     if val >= 0: return "background-color: #e6f4ea; color: #1e7f43; font-weight: 700; text-align: center;"
     else: return "background-color: #fce8e6; color: #c5221f; font-weight: 700; text-align: center;"
 
-# ================== دالة تحميل وعرض البيانات ==================
+# ================== Main Data Loading & Display ==================
 def load_and_display(file_name, is_castle=False):
     try:
         df = pd.read_excel(file_name, sheet_name="Results")
@@ -242,7 +245,7 @@ def load_and_display(file_name, is_castle=False):
     except Exception as e:
         st.error(f"Error loading {file_name}: {e}")
 
-# ================== Tabs (الفترات) ==================
+# ================== Tabs (Periods) ==================
 tab1, tab2, tab3, tab4 = st.tabs(["Period 1", "Period 2", "Period 3", "Castle Competition"])
 
 with tab1:
