@@ -89,7 +89,7 @@ div[data-testid="stButton"] > button:hover {
 
 /* Individual Tab Design */
 [data-testid="stTab"] {
-    height: 20px;
+    height: 40px;
     background-color: #f0f2f6; 
     color: #31333F !important; 
     border-radius: 8px 8px 0 0 !important; 
@@ -97,7 +97,7 @@ div[data-testid="stButton"] > button:hover {
     border-bottom: none !important;
     padding: 0 25px !important;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 /* Active Tab */
@@ -243,4 +243,5 @@ with tab3:
 with tab4:
     st.markdown(f"<div class='tabs-date'>Last update: {get_file_modified_time('Results_Castle.xlsx')}</div>", unsafe_allow_html=True)
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
