@@ -63,8 +63,8 @@ st.markdown("""
 
 /* Smaller Chest Points Button */
 div[data-testid="stButton"] > button {
-    height: 30px;
-    padding: 0px 10px !important;
+    height: 15px;
+    padding: 0px 5px !important;
     font-size: 8px !important;
     border-radius: 6px !important;
     background-color: white !important;
@@ -243,6 +243,7 @@ with tab3:
 with tab4:
     st.markdown(f"<div class='tabs-date'>Last update: {get_file_modified_time('Results_Castle.xlsx')}</div>", unsafe_allow_html=True)
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
