@@ -31,46 +31,41 @@ st.markdown("""
     max-width: 95%;
 }
 
-/* New Top Settings Bar */
-.settings-bar {
-    display: flex;
-    justify-content: flex-end;
-    padding: 10px 0;
-    margin-bottom: -10px;
-}
-
 /* Header layout */
 .header-container {
     display: flex;
     align-items: center;
     gap: 20px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     border-bottom: 1px solid #eee;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
 }
 
 .logo {
-    width: 60px;
+    width: 50px;
     height: auto;
 }
 
 .title {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 800;
     letter-spacing: 1px;
     color: #000000;
 }
 
-/* Smaller Chest Points Button */
+/* Ultra Small Chest Points Button - Force strict sizing */
 div[data-testid="stButton"] > button {
-    height: 15px;
-    padding: 0px 5px !important;
-    font-size: 8px !important;
-    border-radius: 6px !important;
+    height: 18px !important;
+    min-height: 18px !important;
+    line-height: 1 !important;
+    padding: 0px 8px !important;
+    font-size: 9px !important;
+    border-radius: 4px !important;
     background-color: white !important;
     color: #31333F !important;
     border: 1px solid #ddd !important;
     font-weight: 500 !important;
+    margin-top: 5px !important;
 }
 
 div[data-testid="stButton"] > button:hover {
@@ -78,52 +73,34 @@ div[data-testid="stButton"] > button:hover {
     color: #4f8cff !important;
 }
 
-/* Remove Tab Bottom Border and make them connected */
+/* Tab Design */
 [data-testid="stTabs"] [data-baseweb="tab-border"] {
     display: none !important;
 }
 
-[data-testid="stTabs"] [role="tablist"] {
-    gap: 5px; 
-}
-
-/* Individual Tab Design */
 [data-testid="stTab"] {
-    height: 40px;
+    height: 38px;
     background-color: #f0f2f6; 
-    color: #31333F !important; 
     border-radius: 8px 8px 0 0 !important; 
     border: 1px solid #ddd !important;
     border-bottom: none !important;
-    padding: 0 25px !important;
+    padding: 0 20px !important;
     font-weight: 600;
-    font-size: 14px;
 }
 
-/* Active Tab */
 [data-testid="stTab"][aria-selected="true"] {
     background: linear-gradient(135deg, #4f8cff, #3b6df2) !important;
     color: white !important;
-    border-color: #3b6df2 !important;
 }
 
-/* Date Display */
 .tabs-date {
-    font-size: 12px;
+    font-size: 11px;
     color: #5f6368;
-    white-space: nowrap;
-    margin-bottom: 10px;
-    text-align: left;
-}
-
-/* Table Alignment */
-.stDataFrame {
-    margin-top: -1px !important; 
+    margin-bottom: 8px;
 }
 
 [data-testid="stTable"] , [data-testid="stDataFrame"] {
     border: 1px solid #ddd !important;
-    border-radius: 0px !important; 
 }
 
 </style>
@@ -141,13 +118,13 @@ def close_modal():
 
 # ================== TOP SETTINGS BAR & HEADER ==================
 
-# 1. Top Bar for the Button
-t1, t2 = st.columns([0.85, 0.15])
+# 1. Top Bar - Using a very small column for the button (0.08) to prevent stretching
+t1, t2 = st.columns([0.92, 0.08])
 with t2:
-    if st.button("📊 Chest Points", on_click=open_modal, use_container_width=True):
-        pass
+    # Removed use_container_width to let CSS control the width
+    st.button("📊 Chest", on_click=open_modal)
 
-# 2. Main Header (Logo + Title)
+# 2. Main Header
 logo_url = "https://raw.githubusercontent.com/abdulraoufsuliman-ctrl/Chest_Tracker/main/logo.png"
 st.markdown(f"""
 <div class="header-container">
@@ -171,80 +148,47 @@ if st.session_state.show_modal:
         except Exception as e:
             st.error(f"Error loading Used_Points.xlsx: {e}")
         
-        if st.button("Close Screen ✖️", on_click=close_modal):
+        if st.button("Close ✖️", on_click=close_modal):
             st.rerun()
     st.markdown("---")
 
-# ================== Helper Functions ==================
+# ================== Main Functions ==================
 def get_file_modified_time(file_name):
     try:
         ts = os.path.getmtime(file_name)
         dt = datetime.fromtimestamp(ts) + timedelta(hours=2)
-        return dt.strftime("%Y-%m-%d %H:%M (UTC+2)")
+        return dt.strftime("%Y-%m-%d %H:%M")
     except:
         return "N/A"
 
-def highlight_cells(val):
-    if isinstance(val, (int, float)):
-        if val > 0:
-            return "background-color: #e6f4ea; color: #1e7f43; font-weight: 600; text-align: center;"
-        else:
-            return "background-color: #fce8e6; color: #c5221f; font-weight: 600; text-align: center;"
-    return "text-align: center;"
-
-def highlight_points_normal(val):
-    if not isinstance(val, (int, float)): return "text-align: center;"
-    if val == 0: return "background-color: #fce8e6; color: #c5221f; font-weight: 700; text-align: center;"
-    elif 0 < val < 2500: return "background-color: #fff4ce; color: #7a5c00; font-weight: 700; text-align: center;"
-    else: return "background-color: #e6f4ea; color: #1e7f43; font-weight: 700; text-align: center;"
-
-def highlight_points_castle(val):
-    if not isinstance(val, (int, float)): return "text-align: center;"
-    if val >= 0: return "background-color: #e6f4ea; color: #1e7f43; font-weight: 700; text-align: center;"
-    else: return "background-color: #fce8e6; color: #c5221f; font-weight: 700; text-align: center;"
-
-# ================== Main Data Loading & Display ==================
 def load_and_display(file_name, is_castle=False):
     try:
         df = pd.read_excel(file_name, sheet_name="Results")
         num_cols = df.select_dtypes(include="number").columns
         for col in num_cols:
             df[col] = df[col].fillna(0).astype(int)
-
-        points_highlight_func = highlight_points_castle if is_castle else highlight_points_normal
+        
+        # Color coding functions (Simplified for display)
+        def style_points(val):
+            if not isinstance(val, (int, float)): return ""
+            if val <= 0: return "background-color: #fce8e6; color: #c5221f; font-weight: 700;"
+            return "background-color: #e6f4ea; color: #1e7f43; font-weight: 700;"
 
         styled_df = (
             df.style
             .format("{:,}", subset=num_cols)
-            .applymap(points_highlight_func, subset=["Points"])
-            .applymap(highlight_cells, subset=df.columns[2:])
-            .set_properties(**{"border": "1px solid #e0e0e0", "font-size": "14px"})
+            .applymap(style_points, subset=["Points"])
+            .set_properties(**{"text-align": "center", "border": "1px solid #e0e0e0"})
         )
-
         st.dataframe(styled_df, use_container_width=True, height=600, hide_index=True)
     except Exception as e:
-        st.error(f"Error loading {file_name}: {e}")
+        st.error(f"Error: {e}")
 
-# ================== Tabs (Periods) ==================
-tab1, tab2, tab3, tab4 = st.tabs(["Period 1", "Period 2", "Period 3", "Castle Competition"])
+# ================== Tabs ==================
+tab1, tab2, tab3, tab4 = st.tabs(["Period 1", "Period 2", "Period 3", "Castle"])
 
-with tab1:
-    st.markdown(f"<div class='tabs-date'>Last update: {get_file_modified_time('Results1.xlsx')}</div>", unsafe_allow_html=True)
-    load_and_display("Results1.xlsx", is_castle=False)
-
-with tab2:
-    st.markdown(f"<div class='tabs-date'>Last update: {get_file_modified_time('Results2.xlsx')}</div>", unsafe_allow_html=True)
-    load_and_display("Results2.xlsx", is_castle=False)
-
-with tab3:
-    st.markdown(f"<div class='tabs-date'>Last update: {get_file_modified_time('Results3.xlsx')}</div>", unsafe_allow_html=True)
-    load_and_display("Results3.xlsx", is_castle=False)
-
-with tab4:
-    st.markdown(f"<div class='tabs-date'>Last update: {get_file_modified_time('Results_Castle.xlsx')}</div>", unsafe_allow_html=True)
-    load_and_display("Results_Castle.xlsx", is_castle=True)
-
-
-
-
-
+for i, tab in enumerate([tab1, tab2, tab3, tab4], 1):
+    with tab:
+        fname = f"Results{i}.xlsx" if i < 4 else "Results_Castle.xlsx"
+        st.markdown(f"<div class='tabs-date'>Update: {get_file_modified_time(fname)}</div>", unsafe_allow_html=True)
+        load_and_display(fname, is_castle=(i==4))
