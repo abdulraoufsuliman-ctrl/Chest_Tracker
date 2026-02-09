@@ -3,11 +3,26 @@ import pandas as pd
 from datetime import datetime, timedelta
 import os
 
+
+
 # ================== إعداد الصفحة ==================
 st.set_page_config(
     page_title="Player Results",
     layout="wide"
 )
+
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
+
+# ===== زر النقاط المستخدمة =====
+
+
 
 # ================== CSS المطور لتحسين المظهر ==================
 st.markdown("""
@@ -16,9 +31,13 @@ st.markdown("""
     background-color: #f5f7fa;
 }
 
+
+
+
+
 /* تقليل الفراغ العلوي وتوسيط المحتوى */
 .block-container {
-    padding-top: 1.5rem;
+    padding-top: 0.1rem;
     max-width: 95%;
 }
 
@@ -44,6 +63,9 @@ st.markdown("""
     padding-top: 4px;
 
 }
+
+
+
 
 /* ================== إزالة الخط السفلي للتابات وجعلها ملتصقة ================== */
 
@@ -195,7 +217,9 @@ def load_and_display(file_name, is_castle=False):
         
         # تحويل الأعمدة الرقمية وتنسيقها
         num_cols = df.select_dtypes(include="number").columns
-        df[num_cols] = df[num_cols].fillna(0)
+        for col in num_cols:
+            # تحويل القيم إلى أعداد صحيحة (بدون فاصلة عشرية)
+            df[col] = df[col].fillna(0).astype(int)
 
         # اختيار دالة التلوين المناسبة للنقاط
         if is_castle:
