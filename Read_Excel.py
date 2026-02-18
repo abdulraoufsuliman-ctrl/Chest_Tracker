@@ -255,7 +255,12 @@ def load_and_display(file_name, is_castle=False):
 
 # ================== Tabs (الفترات) ==================
 # تأكدنا هنا أن أسماء الفترات مكتوبة بوضوح
-tab1, tab2, tab3, tab4 = st.tabs(["Period 1 18-24", "Period 2",  "Period 3", "Castle Competition"])
+tab1, tab2, tab3, tab4 = st.tabs([
+    "Period 1 18-24",
+    "Period 2",
+    "Period 3",
+    "Castle Competition"
+])
 
 with tab1:
     st.markdown(
@@ -285,6 +290,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
