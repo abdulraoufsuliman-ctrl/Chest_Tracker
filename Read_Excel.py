@@ -256,10 +256,10 @@ def load_and_display(file_name, is_castle=False):
 # ================== Tabs (الفترات) ==================
 # تأكدنا هنا أن أسماء الفترات مكتوبة بوضوح
 tab1, tab2, tab3, tab4 = st.tabs([
-    "Period 1 18-24",
-    "Period 2",
-    "Period 3",
-    "Castle Competition"
+    "Period 1<br><span style='font-size:12px;'>18-24</span>",
+    "Period 2<br><span style='font-size:12px;'>24-2/2</span>",
+    "Period 3<br><span style='font-size:12px;'>2-08</span>",
+    "Castle Competition<br><span style='font-size:12px;'>Special</span>"
 ])
 
 with tab1:
@@ -290,6 +290,7 @@ with tab4:
         unsafe_allow_html=True
     )
     load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
