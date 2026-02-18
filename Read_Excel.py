@@ -284,7 +284,8 @@ with tab4:
         f"<div class='tabs-date'>Last update: {get_file_modified_time('Results_Castle.xlsx')}</div>",
         unsafe_allow_html=True
     )
-    load_and_display("Results_Castle.xlsx", is_castle=False)
+    load_and_display("Results_Castle.xlsx", is_castle=True)
+
 
 
 
