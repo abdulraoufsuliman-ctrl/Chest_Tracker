@@ -25,98 +25,68 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 
 
 # ================== CSS المطور لتحسين المظهر ==================
-st.markdown("""
+image_url = "https://raw.githubusercontent.com/abdulraoufsuliman-ctrl/Chest_Tracker/main/imageBack.png"  # ضع رابط صورتك هنا
+
+st.markdown(f"""
 <style>
-.main {
-    background-color: #f5f7fa;
-}
 
+/* ===== الخلفية العامة ===== */
+.stApp {{
+    background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url("{image_url}");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}}
 
-
-
-
-/* تقليل الفراغ العلوي وتوسيط المحتوى */
-.block-container {
-    padding-top: 0.1rem;
+/* ===== الحاوية الرئيسية ===== */
+.block-container {{
+    padding-top: 0.5rem;
     max-width: 95%;
-}
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+}}
 
-/* Header layout */
-.header {
+/* ===== الهيدر ===== */
+.header {{
     display: flex;
     align-items: center;
     gap: 20px;
     margin-bottom: 25px;
-}
+}}
 
-.logo {
+.logo {{
     width: 70px;
-    height: auto;
-}
+}}
 
-.title {
-    font-size: 35px;
-    font-weight: 800;
-    letter-spacing: 2px;
-    color: #000000;
-    line-height: 2.9;
-    padding-top: 4px;
+.title {{
+    font-size: 38px;
+    font-weight: 900;
+    color: #ffd700 !important;
+    text-shadow: 2px 2px 6px #000;
+    letter-spacing: 3px;
+}}
 
-}
-
-
-
-
-/* ================== إزالة الخط السفلي للتابات وجعلها ملتصقة ================== */
-
-/* إزالة الخط السفلي الافتراضي من Streamlit */
-[data-testid="stTabs"] [data-baseweb="tab-border"] {
-    display: none !important;
-}
-
-/* تنسيق حاوية التابات */
-[data-testid="stTabs"] [role="tablist"] {
-    gap: 5px; 
-}
-
-/* تصميم التاب الفردي */
-[data-testid="stTab"] {
+/* ===== التابات ===== */
+[data-testid="stTab"] {{
     height: 45px;
-    background-color: #f0f2f6; /* لون خلفية خفيف للتابات غير النشطة */
-    color: #31333F !important; /* إظهار النص بوضوح */
-    border-radius: 8px 8px 0 0 !important; /* حواف علوية دائرية قليلاً */
-    border: 1px solid #ddd !important;
-    border-bottom: none !important;
+    background-color: rgba(255,255,255,0.1) !important;
+    color: white !important;
+    border-radius: 8px 8px 0 0 !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
     padding: 0 30px !important;
-    font-weight: 600;
-}
+}}
 
-/* التاب النشط */
-[data-testid="stTab"][aria-selected="true"] {
+[data-testid="stTab"][aria-selected="true"] {{
     background: linear-gradient(135deg, #4f8cff, #3b6df2) !important;
     color: white !important;
-    border-color: #3b6df2 !important;
-}
+}}
 
-
-/* التاريخ */
-.tabs-date {
-    font-size: 12px;
-    color: #5f6368;
-    white-space: nowrap;
-    margin-bottom: 10px;
-    text-align: Left;
-}
-/* ================== تنسيق الجدول (حواف حادة) ================== */
-.stDataFrame {
-    margin-top: -1px !important; /* سحب الجدول للأعلى ليلتصق بالتابات */
-}
-
-/* حواف حادة للجدول */
-[data-testid="stTable"] , [data-testid="stDataFrame"] {
-    border: 1px solid #ddd !important;
-    border-radius: 0px !important; 
-}
+/* ===== الجدول ===== */
+.stDataFrame {{
+    background-color: rgba(255,255,255,0.92) !important;
+    border-radius: 10px !important;
+}}
 
 </style>
 """, unsafe_allow_html=True)
