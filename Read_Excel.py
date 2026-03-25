@@ -218,7 +218,6 @@ def load_and_display(file_name, is_castle=False):
         # تحويل الأعمدة الرقمية وتنسيقها
         num_cols = df.select_dtypes(include="number").columns
         for col in num_cols:
-            # تحويل القيم إلى أعداد صحيحة (بدون فاصلة عشرية)
             df[col] = df[col].fillna(0).astype(int)
 
         # اختيار دالة التلوين المناسبة للنقاط
@@ -231,30 +230,27 @@ def load_and_display(file_name, is_castle=False):
         styled_df = (
             df.style
             .format("{:,}", subset=num_cols)
-        
-            # تلوين عمود Points بشروط خاصة
             .applymap(points_highlight_func, subset=["Points"])
-        
-            # تلوين بقية الأعمدة الرقمية
             .applymap(highlight_cells, subset=df.columns[2:])
-        
             .set_properties(**{
                 "border": "1px solid #e0e0e0",
                 "font-size": "14px"
             })
         )
 
-       st.dataframe(
+        # العرض مع تثبيت عمود الأسماء
+        st.dataframe(
             styled_df,
             use_container_width=True,
             height=600,
             hide_index=True,
             column_config={
-            df.columns[0]: st.column_config.Column(pinned=True) # هذا السطر هو المسؤول عن التثبيت
+                df.columns[0]: st.column_config.Column(pinned=True) # هذا السطر هو المسؤول عن التثبيت
             }
         )
     except Exception as e:
         st.error(f"Error loading {file_name}: {e}")
+
 # ================== Tabs (الفترات) ==================
 # تأكدنا هنا أن أسماء الفترات مكتوبة بوضوح
 tab1, tab2, tab3, tab4 = st.tabs(["P1 (8-14)", "P2 (14-20)",  "P3 (20-26)", "Castle Competition"])
