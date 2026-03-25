@@ -245,7 +245,7 @@ def load_and_display(file_name, is_castle=False):
             height=600,
             hide_index=True,
             on_select="rerun",           # تحديث الصفحة عند النقر
-            selection_mode="single-row",,    # تظليل الصف بالكامل
+            selection_mode="single-row",    # تظليل الصف بالكامل
             column_config={
                 df.columns[0]: st.column_config.Column(pinned=True) # هذا السطر هو المسؤول عن التثبيت
             }
