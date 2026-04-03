@@ -248,7 +248,10 @@ def load_and_display(file_name, is_castle=False):
             styled_df,
             use_container_width=True,
             height=600,
-            hide_index=True
+            hide_index=True,
+            column_config={
+               df.columns[0]: st.column_config.Column(pinned=True) # هذا السطر هو المسؤول عن التثبيت
+            }
         )
     except Exception as e:
         st.error(f"Error loading {file_name}: {e}")
