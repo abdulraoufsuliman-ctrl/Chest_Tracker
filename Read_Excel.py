@@ -249,6 +249,8 @@ def load_and_display(file_name, is_castle=False):
             use_container_width=True,
             height=600,
             hide_index=True,
+            on_select="rerun",
+            selection_mode="single-row",
             column_config={
                df.columns[0]: st.column_config.Column(pinned=True) # هذا السطر هو المسؤول عن التثبيت
             }
