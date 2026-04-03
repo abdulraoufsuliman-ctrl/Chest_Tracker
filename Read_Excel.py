@@ -233,10 +233,10 @@ def load_and_display(file_name, is_castle=False):
             .format("{:,}", subset=num_cols)
         
             # تلوين عمود Points بشروط خاصة
-            .applymap(points_highlight_func, subset=["Points"])
+            .map(points_highlight_func, subset=["Points"])
         
             # تلوين بقية الأعمدة الرقمية
-            .applymap(highlight_cells, subset=df.columns[2:])
+            .map(highlight_cells, subset=df.columns[2:])
         
             .set_properties(**{
                 "border": "1px solid #e0e0e0",
