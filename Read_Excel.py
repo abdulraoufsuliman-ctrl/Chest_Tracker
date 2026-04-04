@@ -167,14 +167,14 @@ def highlight_points_normal(val):
             "font-weight: 700;"
             "text-align: center;"
         )
-    elif 0 < val < 2500:
+    elif 0 < val < 1400:
         return (
             "background-color: #fff4ce;"
             "color: #7a5c00;"
             "font-weight: 700;"
             "text-align: center;"
         )
-    else:  # >= 2500
+    else:  # >= 1400
         return (
             "background-color: #e6f4ea;"
             "color: #1e7f43;"
