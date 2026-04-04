@@ -260,7 +260,7 @@ def load_and_display(file_name, is_castle=False):
 
 # ================== Tabs (الفترات) ==================
 # تأكدنا هنا أن أسماء الفترات مكتوبة بوضوح
-tab1, tab2, tab3, tab4 = st.tabs(["P1 (8-14)", "P2 (14-20)",  "P3 (20-26)", "Castle Competition"])
+tab1, tab2, tab3, tab4 = st.tabs(["P1 (26-1/4)", "P2 (1-7)",  "P3 (7-13)", "Castle Competition"])
 #tab1, tab2, tab3, tab4 = st.tabs(["Period 1", "Period 2",  "Period 3", "Castle Competition"])
 with tab1:
     st.markdown(
